@@ -7,7 +7,7 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <form action="../controllers/UserController.php" method="post" >
+    <form action="users/new" method="post" >
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
