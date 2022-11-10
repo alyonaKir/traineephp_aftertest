@@ -1,1 +1,7 @@
 <?php
+index();
+
+function index(){
+
+}
+?>
