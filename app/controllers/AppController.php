@@ -2,6 +2,5 @@
 index();
 
 function index(){
-
 }
 ?>

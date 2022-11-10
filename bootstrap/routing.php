@@ -8,7 +8,7 @@
         function route($url){
             //echo "url ".$url;
             $path = $this->pages[$url];
-            $file_dir = "app/views/".$path;
+            $file_dir = $path;
             if(file_exists($file_dir)){
                 require $file_dir;
                 //echo "create";
