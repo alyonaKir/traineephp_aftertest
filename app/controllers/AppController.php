@@ -1,6 +1,6 @@
 <?php
 function index(){
-    require "app/views/mainPage.php";
+    require_once "app/views/mainPage.php";
 //    include('bootstrap/routing.php');
 //    $url = key($_GET);
 //    echo $url;

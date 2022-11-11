@@ -2,7 +2,7 @@
 
 function createUser(){
  if($_GET['btnAddNoForm']!=null){
-     require "app/views/new.php";
+     require_once "app/views/new.php";
  }
 }
 function newUser(){
