@@ -1,12 +1,12 @@
 <?php
+
 class UserController
 {
     static function createUser(): void
     {
-        if ($_GET['btnAddNoForm'] != null) {
-
+        //require "app/views/new.php";
+        if ($_POST['btnAddNoForm'] != null) {
             require "app/views/new.php";
-
         }
     }
 
@@ -17,4 +17,5 @@ class UserController
         }
     }
 }
+
 ?>
