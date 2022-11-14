@@ -1,12 +1,21 @@
 <?php
 
-class  App{
-     function run(){
-         include('app/controllers/AppController.php');
-         index();
-        //TODO run
+class  App
+{
+    function run()
+    {
+        include 'bootstrap/Router.php';
+        include 'app/controllers/AppController.php';
+        include 'app/controllers/UserController.php';
+        $router = new Router();
+        $router->get("/", index());
+        $router->get("/users/new", newUser());
+        $router->post("/users/create", createUser());
+        $router->run();
+        $router->addNotFoundHandler(function () {
+            echo 'not found';
+        });
     }
 }
+
 ?>
-
-
