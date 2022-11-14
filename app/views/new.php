@@ -7,7 +7,7 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <form action="new" method="post" >
+    <form action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/new" method="post" >
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
