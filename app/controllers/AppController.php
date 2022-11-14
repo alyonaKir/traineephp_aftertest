@@ -1,7 +1,9 @@
 <?php
-function index() : void
+class AppController
 {
-    require "app/views/mainPage.php";
+    static function index(): void
+    {
+        require "app/views/mainPage.php";
+    }
 }
-
 ?>

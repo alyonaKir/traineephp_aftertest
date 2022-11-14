@@ -1,19 +1,20 @@
 <?php
-
-function createUser(): void
+class UserController
 {
-    if ($_GET['btnAddNoForm'] != null) {
+    static function createUser(): void
+    {
+        if ($_GET['btnAddNoForm'] != null) {
 
-        require "app/views/new.php";
+            require "app/views/new.php";
 
+        }
+    }
+
+    static function newUser(): void
+    {
+        if (isset($_POST['btnAdd'])) {
+            var_dump($_POST);
+        }
     }
 }
-
-function newUser(): void
-{
-    if (isset($_POST['btnAdd'])) {
-        var_dump($_POST);
-    }
-}
-
 ?>

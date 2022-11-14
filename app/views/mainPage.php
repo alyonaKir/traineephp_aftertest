@@ -7,7 +7,7 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-<form method="get" action="users/create">
+<form method="get" action="../users/create">
     <button name="btnAddNoForm" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user">Add user</button>
 </form>
 
