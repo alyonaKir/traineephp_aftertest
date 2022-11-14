@@ -8,9 +8,19 @@ class  App
         include 'app/controllers/AppController.php';
         include 'app/controllers/UserController.php';
         $router = new Router();
-        $router->get("/", AppController::index());
-        $router->get("/users/new", UserController::newUser());
-        $router->post("/users/create", UserController::createUser());
+       // $router->get("/",[AppController::class, 'index']);
+        $router->get("/", function (){
+            $obj = new AppController();
+            $obj->index();
+        });
+        $router->post("/users/new", function (){
+            $obj = new UserController();
+            $obj->newUser();
+        });
+        $router->post("/users/create", function (){
+            $obj = new UserController();
+            $obj->createUser();
+        });
         $router->run();
         $router->addNotFoundHandler(function () {
             echo 'not found';

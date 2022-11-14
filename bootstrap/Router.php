@@ -2,6 +2,7 @@
 
 class Router
 {
+
     private array $handlers;
     private $notFoundHandler;
 
@@ -46,8 +47,10 @@ class Router
                 $callback = $this->notFoundHandler;
             }
         }
+
         call_user_func_array($callback, [
             array_merge($_GET, $_POST)
         ]);
     }
 }
+?>

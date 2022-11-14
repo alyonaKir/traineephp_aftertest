@@ -2,7 +2,7 @@
 
 class UserController
 {
-    static function createUser(): void
+    public function createUser(): void
     {
         //require "app/views/new.php";
         if ($_POST['btnAddNoForm'] != null) {
@@ -10,7 +10,7 @@ class UserController
         }
     }
 
-    static function newUser(): void
+    public function newUser(): void
     {
         if (isset($_POST['btnAdd'])) {
             var_dump($_POST);
