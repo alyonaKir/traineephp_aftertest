@@ -7,6 +7,7 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
+<div id="nav">
     <form action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/new" method="post" >
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -32,5 +33,6 @@
         </div>
         <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user">Add user</button>
     </form>
+</div>
 </body>
 </html>

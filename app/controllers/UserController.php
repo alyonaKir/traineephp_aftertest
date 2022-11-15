@@ -5,7 +5,7 @@ class UserController
     public function createUser(): void
     {
         //require "app/views/new.php";
-        if ($_POST['btnAddNoForm'] != null) {
+        if ($_POST['btnAdd'] != null) {
             require "app/views/new.php";
         }
     }
@@ -20,7 +20,9 @@ class UserController
 
     public function show($id): void
     {
-        echo 'show';
+        if ($_POST['btnShow'] != null) {
+            echo 'show';
+        }
     }
 
     public function edit($id): void
@@ -30,7 +32,9 @@ class UserController
 
     public function update(): void
     {
-        echo 'update';
+        if ($_POST['btnUpdate'] != null) {
+            echo 'update';
+        }
     }
 
     public function delete($id): void

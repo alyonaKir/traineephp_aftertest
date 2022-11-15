@@ -1,11 +1,13 @@
 form{
-    padding: 20px;
-    position: fixed; top: 10%; left: 50%;
+    width: 300px;
+    margin: 20px;
+}
+#nav{
+    padding: 10px;
+    position: fixed; top: 50%; left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 300px;
-    margin: 20px;
     border-radius: 30px;
     background: #ebf0ff;
 }
