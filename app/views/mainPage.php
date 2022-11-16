@@ -11,6 +11,7 @@
 <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/create">
     <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Add user</button>
 </form>
+
 <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users">
     <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Show users</button>
 </form>

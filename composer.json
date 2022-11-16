@@ -4,7 +4,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "App\\controllers\\": "app/controllers"
+            "App\\controllers\\": "app/controllers",
+            "Models\\User\\": "models/"
         }
     },
     "authors": [
@@ -13,5 +14,8 @@
             "email": "alyona.kirushcheva@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-pdo": "*",
+        "ext-mysqli": "*"
+    }
 }

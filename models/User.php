@@ -1,29 +1,38 @@
 <?php
-enum Gender{
-    case male;
-    case female;
-}
 
-class User{
-    private String $emal;
-    private String $name;
-    private Gender $gender;
+namespace Models\User;
+
+class User
+{
+    private string $email;
+    private string $name;
+    private string $gender;
     private bool $active;
+
+    public function __construct()
+    {
+        echo 'created';
+    }
+
+    public function __toString(): string
+    {
+        return $this->email . " " . $this->name . " " . $this->gender . " " . $this->active;
+    }
 
     /**
      * @return String
      */
-    public function getEmal(): string
+    public function getEmail(): string
     {
-        return $this->emal;
+        return $this->email;
     }
 
     /**
-     * @param String $emal
+     * @param String $email
      */
-    public function setEmal(string $emal): void
+    public function setEmal(string $email): void
     {
-        $this->emal = $emal;
+        $this->email = $email;
     }
 
     /**
@@ -43,17 +52,17 @@ class User{
     }
 
     /**
-     * @return Gender
+     * @return String
      */
-    public function getGender(): Gender
+    public function getGender(): string
     {
         return $this->gender;
     }
 
     /**
-     * @param Gender $gender
+     * @param String $gender
      */
-    public function setGender(Gender $gender): void
+    public function setGender(string $gender): void
     {
         $this->gender = $gender;
     }
@@ -76,3 +85,5 @@ class User{
 
 
 }
+
+?>
