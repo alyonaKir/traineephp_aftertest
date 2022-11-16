@@ -1,10 +1,9 @@
 <?php
-
+namespace App\controllers;
 class UserController
 {
     public function createUser(): void
     {
-        //require "app/views/new.php";
         if ($_POST['btnAdd'] != null) {
             require "app/views/new.php";
         }
@@ -22,18 +21,22 @@ class UserController
     {
         if ($_POST['btnShow'] != null) {
             echo 'show';
+            require "app/views/mainPage.php";
         }
     }
 
     public function edit($id): void
     {
         echo 'edit';
+        require "app/views/mainPage.php";
     }
 
     public function update(): void
     {
+        echo 'update';
         if ($_POST['btnUpdate'] != null) {
             echo 'update';
+            require "app/views/mainPage.php";
         }
     }
 

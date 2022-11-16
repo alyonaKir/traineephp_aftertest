@@ -14,9 +14,12 @@
 <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users">
     <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Show users</button>
 </form>
+
 <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/update">
     <button name="btnUpdate" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Update users</button>
 </form>
+
+
 </div>
 </body>
 </html>
