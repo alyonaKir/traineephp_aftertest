@@ -13,8 +13,9 @@ class  App
         $id = 4;
         $router = new Router();
         $router->get("/",[(new AppController()), 'index']);
+        $router->post("/",[(new AppController()), 'index']);
         $router->post("/users", [(new UserController()), 'showAll']);
-        $router->get("/user/$id", [(new UserController()), 'showByID']);
+        $router->post("/user/$id", [(new UserController()), 'showByID']);
         $router->get("/users/delete/$id", [(new UserController()), 'delete']);
         $router->get("/users/edit/$id", [(new UserController()), 'edit']);
         $router->post("/users/update", [(new UserController()), 'update']);

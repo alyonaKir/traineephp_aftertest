@@ -129,7 +129,8 @@ class DataBaseClass
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
         if ($result = $conn->query($sql)) {
-            $rowsCount = $result->num_rows; // количество полученных строк
+           // $rowsCount = $result->num_rows; // количество полученных строк
+            //return $result;
             echo "<table>";
             foreach ($result as $row) {
                 echo "<tr>";

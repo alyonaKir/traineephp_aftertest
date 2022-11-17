@@ -6,6 +6,13 @@ use User;
 
 class UserController
 {
+
+    private User $user;
+    public function __construct()
+    {
+        $this->user = new User('', '', '', 1);
+    }
+
     public function createUser(): void
     {
         if ($_POST['btnAdd'] != null) {
@@ -29,25 +36,24 @@ class UserController
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
 
-            $db = new DataBaseClass();
-            $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
-            $db->addInfo($user);
+            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
+            $this->user->addUsertoDB();
             require "app/views/mainPage.php";
         }
     }
 
     public function showAll(): void
     {
+
         require "app/views/showAll.php";
-        $db = new DataBaseClass();
-        $db->showInfoDB();
+        $this->user->showAllUsers();
     }
 
     public function showByID($id): void
     {
         //$id = 1;
         echo $id;
-        require "app/views/showAll.php";
+        require "app/views/showByID.php";
         $db = new DataBaseClass();
         $db->showByID($id);
     }

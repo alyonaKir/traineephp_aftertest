@@ -8,6 +8,8 @@ class User
     private string $gender;
     private bool $active;
 
+    private DataBaseClass $db;
+
     /**
      * @param string $email
      * @param string $name
@@ -20,7 +22,9 @@ class User
         $this->name = $name;
         $this->gender = $gender;
         $this->active = $active;
+        $this->db = new DataBaseClass();
     }
+
 
 
     public function __toString(): string
@@ -109,7 +113,13 @@ class User
         $this->active = $active;
     }
 
+    public function addUsertoDB(){
+        $this->db->addInfo($this);
+    }
 
+    public function showAllUsers(){
+        $this->db->showInfoDB();
+    }
 }
 
 ?>
