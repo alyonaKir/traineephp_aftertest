@@ -44,9 +44,8 @@ class UserController
 
     public function showAll(): void
     {
-
         require "app/views/showAll.php";
-        $this->user->showAllUsers();
+        $this->user->showAllUsersFromDB();
     }
 
     public function showByID($id): void
@@ -54,8 +53,7 @@ class UserController
         //$id = 1;
         echo $id;
         require "app/views/showByID.php";
-        $db = new DataBaseClass();
-        $db->showByID($id);
+        $this->user->showUserByID($id);
     }
 
     public function edit($id): void
@@ -68,8 +66,7 @@ class UserController
     {
         if ($_POST['btnUpdate'] != null) {
             echo 'update';
-            $db = new DataBaseClass();
-            $db->UpdateDB();
+          $this->user->updateUsers();
         }
     }
 
@@ -77,8 +74,7 @@ class UserController
     {
         $id = 3;
         echo 'delete';
-        $db = new DataBaseClass();
-        $db->DeleteUser($id);
+        $this->user->deleteUserFromDB($id);
     }
 }
 

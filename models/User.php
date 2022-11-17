@@ -25,8 +25,6 @@ class User
         $this->db = new DataBaseClass();
     }
 
-
-
     public function __toString(): string
     {
         return $this->email . " " . $this->name . " " . $this->gender . " " . $this->active;
@@ -117,8 +115,18 @@ class User
         $this->db->addInfo($this);
     }
 
-    public function showAllUsers(){
+    public function showAllUsersFromDB(){
         $this->db->showInfoDB();
+    }
+    public function showUserByID($id){
+        $this->db->showByID($id);
+    }
+
+    public function updateUsers(){
+        $this->db->updateDB();
+    }
+    public function deleteUserFromDB($id){
+        $this->db->deleteUser($id);
     }
 }
 
