@@ -1,23 +1,49 @@
 <?php
 
-namespace Models\User;
-
 class User
 {
+    private int $id;
     private string $email;
     private string $name;
     private string $gender;
     private bool $active;
 
-    public function __construct()
+    /**
+     * @param string $email
+     * @param string $name
+     * @param string $gender
+     * @param bool $active
+     */
+    public function __construct(string $email, string $name, string $gender, bool $active)
     {
-        echo 'created';
+        $this->email = $email;
+        $this->name = $name;
+        $this->gender = $gender;
+        $this->active = $active;
     }
+
 
     public function __toString(): string
     {
         return $this->email . " " . $this->name . " " . $this->gender . " " . $this->active;
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
 
     /**
      * @return String

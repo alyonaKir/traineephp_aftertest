@@ -5,7 +5,6 @@
         "psr-4": {
             "App\\": "app/",
             "App\\controllers\\": "app/controllers",
-            "Models\\User\\": "models/"
         }
     },
     "authors": [
