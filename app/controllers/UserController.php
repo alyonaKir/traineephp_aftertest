@@ -13,9 +13,22 @@ class UserController
         }
     }
 
+    private function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     public function newUser(): void
     {
         if (isset($_POST['btnAdd'])) {
+            $email = $this->test_input($_POST["email"]);
+            $name = $this->test_input($_POST["name"]);
+            $gender = $this->test_input($_POST["gender"]);
+            $status = $this->test_input($_POST["status"]);
+
             $db = new DataBaseClass();
             $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
             $db->addInfo($user);
@@ -29,9 +42,11 @@ class UserController
         $db = new DataBaseClass();
         $db->showInfoDB();
     }
+
     public function showByID($id): void
     {
-        $id = 1;
+        //$id = 1;
+        echo $id;
         require "app/views/showAll.php";
         $db = new DataBaseClass();
         $db->showByID($id);
@@ -54,7 +69,7 @@ class UserController
 
     public function delete($id): void
     {
-        $id=4;
+        $id = 3;
         echo 'delete';
         $db = new DataBaseClass();
         $db->DeleteUser($id);
