@@ -1,8 +1,7 @@
 <?php
 namespace App\controllers;
-
-use DataBaseClass;
-use User;
+include 'vendor/autoload.php';
+use Models\User;
 
 class UserController
 {

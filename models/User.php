@@ -1,4 +1,7 @@
 <?php
+namespace Models;
+include 'vendor/autoload.php';
+use DataBase\DataBaseClass;
 
 class User
 {

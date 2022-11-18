@@ -1,4 +1,8 @@
 <?php
+namespace DataBase;
+include 'vendor/autoload.php';
+use Models\User;
+use PDO;
 
 class DataBaseClass
 {
@@ -149,6 +153,7 @@ class DataBaseClass
         $conn->close();
 
     }
+
     public function EditUser($id){
 
     }

@@ -3,8 +3,11 @@
     "description": "simple users app",
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
             "App\\controllers\\": "app/controllers",
+            "Models\\": "models/",
+            "DataBase\\": "database/",
+            "Bootstrap\\": "bootstrap/",
+            "System\\": "system/"
         }
     },
     "authors": [
