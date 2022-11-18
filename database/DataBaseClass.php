@@ -1,4 +1,5 @@
 <?php
+
 namespace DataBase;
 include 'vendor/autoload.php';
 use Models\User;
@@ -6,13 +7,11 @@ use PDO;
 
 class DataBaseClass
 {
-    private User $user;
     private $db;
     private $dbinfo;
 
     /**
      * connect to the db, db_info input
-     * @param User $user
      */
     public function __construct()
     {
@@ -50,7 +49,7 @@ class DataBaseClass
         $name = $user->getName();
         $gender = $user->getGender();
         $status = $user->isActive();
-
+        $log = "";
         $db_table = $this->dbinfo['table'];
         try {
 
@@ -60,12 +59,15 @@ class DataBaseClass
             $query->execute($data);
             $result = true;
         } catch (\PDOException $e) {
-            print "Error: " . $e->getMessage() . "<br/>";
+            $log = "Error: " . $e->getMessage() . "<br/>";
+            //print "Error: " . $e->getMessage() . "<br/>";
         }
 
         if ($result) {
-            echo "<script>alert('We added information into database!')</script>";
+            $log = 'We added information into database!';
+            //echo "<script>alert('We added information into database!')</script>";
         }
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
     }
 
 
@@ -81,17 +83,12 @@ class DataBaseClass
         $sql = "SELECT * FROM $db_table";
         if ($result = $conn->query($sql)) {
             $rowsCount = $result->num_rows; // количество полученных строк
-            echo "<table>";
+
+            echo '<pre>';
             foreach ($result as $row) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["email"] . "</td>";
-                echo "<td>" . $row["name"] . "</td>";
-                echo "<td>" . $row["gender"] . "</td>";
-                echo "<td>" . $row["active"] . "</td>";
-                echo "</tr>";
+                print_r($row);
             }
-            echo "</table>";
+            echo '</pre>';
             $result->free();
         } else {
             echo "Ошибка: " . $conn->error;
@@ -114,7 +111,8 @@ class DataBaseClass
         $conn->close();
     }
 
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "DELETE FROM $db_table WHERE id=$id";
@@ -128,12 +126,13 @@ class DataBaseClass
         $conn->close();
     }
 
-    public function showByID($id){
+    public function showByID($id)
+    {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
         if ($result = $conn->query($sql)) {
-           // $rowsCount = $result->num_rows; // количество полученных строк
+            // $rowsCount = $result->num_rows; // количество полученных строк
             //return $result;
             echo "<table>";
             foreach ($result as $row) {
@@ -154,7 +153,8 @@ class DataBaseClass
 
     }
 
-    public function EditUser($id){
+    public function EditUser($id)
+    {
 
     }
 
