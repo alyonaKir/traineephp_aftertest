@@ -126,7 +126,7 @@ class DataBaseClass
         $conn->close();
     }
 
-    public function showByID($id)
+    public function showByID($id) : User
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
@@ -134,22 +134,24 @@ class DataBaseClass
         if ($result = $conn->query($sql)) {
             // $rowsCount = $result->num_rows; // количество полученных строк
             //return $result;
-            echo "<table>";
+           // echo "<table>";
             foreach ($result as $row) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["email"] . "</td>";
-                echo "<td>" . $row["name"] . "</td>";
-                echo "<td>" . $row["gender"] . "</td>";
-                echo "<td>" . $row["active"] . "</td>";
-                echo "</tr>";
+                $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+//                echo "<tr>";
+//                echo "<td>" . $row["id"] . "</td>";
+//                echo "<td>" . $row["email"] . "</td>";
+//                echo "<td>" . $row["name"] . "</td>";
+//                echo "<td>" . $row["gender"] . "</td>";
+//                echo "<td>" . $row["active"] . "</td>";
+//                echo "</tr>";
             }
-            echo "</table>";
+           // echo "</table>";
             $result->free();
         } else {
             echo "Ошибка: " . $conn->error;
         }
         $conn->close();
+         return $user;
 
     }
 

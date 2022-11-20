@@ -59,9 +59,9 @@ class UserController
 
     public function showByID($id): void
     {
-        $id = $this->getIdFromURL();
-        $this->user->showUserByID($id);
-        require "app/views/showByID.php";
+        require 'app/views/chooseID.php';
+        $id = $_GET['id'];
+        $user = $this->user->showUserByID($id);
     }
 
     public function edit($id): void

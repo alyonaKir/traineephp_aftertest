@@ -121,8 +121,8 @@ class User
     public function showAllUsersFromDB(){
         $this->db->showInfoDB();
     }
-    public function showUserByID($id){
-        $this->db->showByID($id);
+    public function showUserByID($id): User{
+        return $this->db->showByID($id);
     }
 
     public function updateUsers(){

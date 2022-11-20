@@ -14,8 +14,8 @@ class  App
         $router->get("/",[(new AppController()), 'index']);
         $router->post("/",[(new AppController()), 'index']);
         $router->post("/users", [(new UserController()), 'showAll']);
-        $router->post("/user/[0-9+]", [(new UserController()), 'showByID']);
-        $router->get("/user/[0-9+]", [(new UserController()), 'showByID']);
+        $router->post("/user", [(new UserController()), 'showByID']);
+        $router->get("/user", [(new UserController()), 'showByID']);
         $router->get("/users/delete/{id:\d+}", [(new UserController()), 'delete']);
         $router->get("/users/edit/{id:\d+}", [(new UserController()), 'edit']);
         $router->post("/users/update", [(new UserController()), 'update']);
