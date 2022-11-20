@@ -118,8 +118,8 @@ class User
         $this->db->addInfo($this);
     }
 
-    public function showAllUsersFromDB(){
-        $this->db->showInfoDB();
+    public function showAllUsersFromDB() : array{
+        return $this->db->showInfoDB();
     }
     public function showUserByID($id): User{
         return $this->db->showByID($id);

@@ -76,24 +76,27 @@ class DataBaseClass
      *
      * @return void
      */
-    public function showInfoDB()
+    public function showInfoDB() : array
     {
+        $users = array();
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table";
         if ($result = $conn->query($sql)) {
             $rowsCount = $result->num_rows; // количество полученных строк
 
-            echo '<pre>';
+            //echo '<pre>';
             foreach ($result as $row) {
-                print_r($row);
+                $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+                //print_r($row);
             }
-            echo '</pre>';
+            //echo '</pre>';
             $result->free();
         } else {
             echo "Ошибка: " . $conn->error;
         }
         $conn->close();
+        return $users;
     }
 
     public function updateDB()
@@ -137,15 +140,7 @@ class DataBaseClass
            // echo "<table>";
             foreach ($result as $row) {
                 $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
-//                echo "<tr>";
-//                echo "<td>" . $row["id"] . "</td>";
-//                echo "<td>" . $row["email"] . "</td>";
-//                echo "<td>" . $row["name"] . "</td>";
-//                echo "<td>" . $row["gender"] . "</td>";
-//                echo "<td>" . $row["active"] . "</td>";
-//                echo "</tr>";
             }
-           // echo "</table>";
             $result->free();
         } else {
             echo "Ошибка: " . $conn->error;

@@ -45,7 +45,9 @@ class UserController
     public function showAll(): void
     {
         require "app/views/showAll.php";
-        $this->user->showAllUsersFromDB();
+        $arrUsers = $this->user->showAllUsersFromDB();
+        //var_dump($arrUsers);
+        showAll($arrUsers);
     }
 
     private function getIdFromURL(): int
@@ -62,6 +64,8 @@ class UserController
         require 'app/views/chooseID.php';
         $id = $_GET['id'];
         $user = $this->user->showUserByID($id);
+        require 'app/views/showByID.php';
+        show($user);
     }
 
     public function edit($id): void
@@ -80,8 +84,7 @@ class UserController
 
     public function delete($id): void
     {
-        $id = 3;
-        echo 'delete';
+        $id = $_GET['id'];
         $this->user->deleteUserFromDB($id);
     }
 }
