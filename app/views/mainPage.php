@@ -21,7 +21,7 @@
 </form>
 
     <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/user">
-        <button name="btnUpdate" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Show by ID</button>
+        <button name="btnShowID" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Show by ID</button>
     </form>
 
 

@@ -114,7 +114,7 @@ class User
         $this->active = $active;
     }
 
-    public function addUsertoDB(){
+    public function addUsertoDB(): void{
         $this->db->addInfo($this);
     }
 
@@ -125,11 +125,14 @@ class User
         return $this->db->showByID($id);
     }
 
-    public function updateUsers(){
+    public function updateUsers(): void{
         $this->db->updateDB();
     }
-    public function deleteUserFromDB($id){
+    public function deleteUserFromDB($id) : void{
         $this->db->deleteUser($id);
+    }
+    public function editUserInfoInDB($id, $user): void{
+        $this->db->editUser($id, $user);
     }
 }
 

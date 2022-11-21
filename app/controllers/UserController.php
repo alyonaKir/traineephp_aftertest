@@ -4,6 +4,7 @@ include 'vendor/autoload.php';
 
 use Models\User;
 
+session_start();
 class UserController
 {
 
@@ -59,19 +60,24 @@ class UserController
         return $url[count($url) - 1];
     }
 
-    public function showByID($id): void
+
+    public function showByID(): void
     {
         require 'app/views/chooseID.php';
         $id = $_GET['id'];
+        $_SESSION = $_GET;
         $user = $this->user->showUserByID($id);
+        //echo $id;
         require 'app/views/showByID.php';
         show($user);
     }
 
-    public function edit($id): void
+    public function edit(): void
     {
-        echo 'edit';
-        require "app/views/mainPage.php";
+       $id = $_SESSION['id'];
+       $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
+       $this->user->editUserInfoInDB($id, $user);
+       require "app/views/mainPage.php";
     }
 
     public function update(): void
@@ -82,10 +88,13 @@ class UserController
         }
     }
 
-    public function delete($id): void
+    public function delete(): void
     {
-        $id = $_GET['id'];
-        $this->user->deleteUserFromDB($id);
+        $id = $_SESSION['id'];
+        if($_POST['btnDel'] != null) {
+            $this->user->deleteUserFromDB($id);
+            require 'app/views/mainPage.php';
+        }
     }
 }
 

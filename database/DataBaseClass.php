@@ -2,6 +2,7 @@
 
 namespace DataBase;
 include 'vendor/autoload.php';
+
 use Models\User;
 use PDO;
 
@@ -15,14 +16,7 @@ class DataBaseClass
      */
     public function __construct()
     {
-        $this->dbinfo = array(
-            "host" => "localhost",
-            "user" => "root",
-            "password" => "mynewpassword",
-            "base" => 'Users',
-            "table" => 'user'
-        );
-
+        $this->dbinfo = require 'dbInfo.php';
         $this->db = new PDO('mysql:host=' . $this->dbinfo['host'] . ';dbname=' . $this->dbinfo['base'], $this->dbinfo['user'], $this->dbinfo['password']);
         //$this->db = $this->createConnection();
     }
@@ -60,12 +54,10 @@ class DataBaseClass
             $result = true;
         } catch (\PDOException $e) {
             $log = "Error: " . $e->getMessage() . "<br/>";
-            //print "Error: " . $e->getMessage() . "<br/>";
         }
 
         if ($result) {
             $log = 'We added information into database!';
-            //echo "<script>alert('We added information into database!')</script>";
         }
         file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
     }
@@ -76,7 +68,7 @@ class DataBaseClass
      *
      * @return void
      */
-    public function showInfoDB() : array
+    public function showInfoDB(): array
     {
         $users = array();
         $conn = $this->createConnection();
@@ -88,9 +80,7 @@ class DataBaseClass
             //echo '<pre>';
             foreach ($result as $row) {
                 $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
-                //print_r($row);
             }
-            //echo '</pre>';
             $result->free();
         } else {
             echo "Ошибка: " . $conn->error;
@@ -129,15 +119,12 @@ class DataBaseClass
         $conn->close();
     }
 
-    public function showByID($id) : User
+    public function showByID($id): User
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
         if ($result = $conn->query($sql)) {
-            // $rowsCount = $result->num_rows; // количество полученных строк
-            //return $result;
-           // echo "<table>";
             foreach ($result as $row) {
                 $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
             }
@@ -146,13 +133,28 @@ class DataBaseClass
             echo "Ошибка: " . $conn->error;
         }
         $conn->close();
-         return $user;
+        return $user;
 
     }
 
-    public function EditUser($id)
+    public function editUser($id, $user)
     {
+        $conn = $this->createConnection();
+        $db_table = $this->dbinfo['table'];
 
+        $userEmail = $conn->real_escape_string($user->getEmail());
+        $userName = $conn->real_escape_string($user->getName());
+        $userGender = $conn->real_escape_string($user->getGender());
+        $userActive = $conn->real_escape_string($user->isActive());
+
+        $sql = "UPDATE $db_table SET email = '$userEmail', name = '$userName', gender = '$userGender', active = '$userActive' WHERE id = $id";
+
+        if ($result = $conn->query($sql)) {
+            //$result->free();
+        } else {
+            echo "Ошибка: " . $conn->error;
+        }
+        $conn->close();
     }
 
 
