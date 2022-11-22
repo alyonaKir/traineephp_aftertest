@@ -1,6 +1,8 @@
 <?php
+
 namespace Models;
 include 'vendor/autoload.php';
+
 use DataBase\DataBaseClass;
 
 class User
@@ -114,25 +116,38 @@ class User
         $this->active = $active;
     }
 
-    public function addUsertoDB(): void{
+    public function addUsertoDB(): void
+    {
         $this->db->addInfo($this);
     }
 
-    public function showAllUsersFromDB() : array{
+    public function showAllUsersFromDB(): array
+    {
         return $this->db->showInfoDB();
     }
-    public function showUserByID($id): User{
+
+    public function showUserByID($id): User
+    {
         return $this->db->showByID($id);
     }
 
-    public function updateUsers(): void{
+    public function updateUsers(): void
+    {
         $this->db->updateDB();
     }
-    public function deleteUserFromDB($id) : void{
+
+    public function deleteUserFromDB($id): void
+    {
         $this->db->deleteUser($id);
     }
-    public function editUserInfoInDB($id, $user): void{
+
+    public function editUserInfoInDB($id, $user): void
+    {
         $this->db->editUser($id, $user);
+    }
+
+    public function checkId($id){
+        return $this->db->checkIdInDB($id);
     }
 }
 

@@ -5,6 +5,7 @@
     <title>User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="/assets/javascript/confirm.js"></script>
 </head>
 <?php function show (\Models\User $user):void{?>
 <body>
@@ -35,7 +36,7 @@
         <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Edit users</button>
     </form>
 
-    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/delete">
+    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/delete" onsubmit="return deleletconfig()">
         <button name="btnDel" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Delete user</button>
     </form>
 

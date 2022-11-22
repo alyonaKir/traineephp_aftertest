@@ -37,7 +37,7 @@ class UserController
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
-            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
+            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active"?1:0);
             $this->user->addUsertoDB();
             require "app/views/mainPage.php";
         }
@@ -66,16 +66,22 @@ class UserController
         require 'app/views/chooseID.php';
         $id = $_GET['id'];
         $_SESSION = $_GET;
+        if($this->user->checkId($id)){
         $user = $this->user->showUserByID($id);
         //echo $id;
         require 'app/views/showByID.php';
         show($user);
+        }
+        else{
+            echo "<script>alert('There are no such users. Choose another.')</script>";
+            require 'app/views/chooseID.php';
+        }
     }
 
     public function edit(): void
     {
        $id = $_SESSION['id'];
-       $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active");
+       $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active"?1:0);
        $this->user->editUserInfoInDB($id, $user);
        require "app/views/mainPage.php";
     }

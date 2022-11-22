@@ -17,6 +17,7 @@ function showAll($users)
     <table class="table">
         <thead class="thead-light">
         <tr>
+            <th scope="col">ID</th>
             <th scope="col">Email</th>
             <th scope="col">Name</th>
             <th scope="col">Gender</th>
@@ -28,6 +29,7 @@ function showAll($users)
         foreach ($users as $row) {
             ?>
             <tr>
+                <td><?php echo $row->getId(); ?></td>
                 <td><?php echo $row->getEmail(); ?></td>
                 <td><?php echo $row->getName(); ?></td>
                 <td><?php echo $row->getGender(); ?></td>

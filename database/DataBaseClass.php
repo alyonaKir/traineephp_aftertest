@@ -42,7 +42,7 @@ class DataBaseClass
         $email = $user->getEmail();
         $name = $user->getName();
         $gender = $user->getGender();
-        $status = $user->isActive();
+        $status = $user->isActive() ? 1 : 0;
         $log = "";
         $db_table = $this->dbinfo['table'];
         try {
@@ -74,18 +74,21 @@ class DataBaseClass
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table";
+        $log = "";
         if ($result = $conn->query($sql)) {
             $rowsCount = $result->num_rows; // количество полученных строк
 
             //echo '<pre>';
             foreach ($result as $row) {
                 $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+                $users[count($users) - 1]->setId($row['id']);
             }
             $result->free();
         } else {
-            echo "Ошибка: " . $conn->error;
+            $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
         return $users;
     }
 
@@ -94,13 +97,14 @@ class DataBaseClass
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table ORDER BY NEWID()";
+        $log = "";
         $conn->query($sql);
         if ($conn->query($sql) === TRUE) {
-            echo "Successful query";
+            $log = "Successful query";
         } else {
-            echo "Error query: " . $conn->error;
+            $log = "Error query: " . $conn->error;
         }
-
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
         $conn->close();
     }
 
@@ -109,13 +113,13 @@ class DataBaseClass
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "DELETE FROM $db_table WHERE id=$id";
-
+        $log = "";
         if ($conn->query($sql) === TRUE) {
-            echo "Record deleted successfully";
+            $log = "Record deleted successfully";
         } else {
-            echo "Error deleting record: " . $conn->error;
+            $log = "Error deleting record: " . $conn->error;
         }
-
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
         $conn->close();
     }
 
@@ -124,15 +128,18 @@ class DataBaseClass
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
+        $log = "";
         if ($result = $conn->query($sql)) {
             foreach ($result as $row) {
                 $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+
             }
             $result->free();
         } else {
-            echo "Ошибка: " . $conn->error;
+            $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
         return $user;
 
     }
@@ -141,6 +148,7 @@ class DataBaseClass
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
+        $log = "";
 
         $userEmail = $conn->real_escape_string($user->getEmail());
         $userName = $conn->real_escape_string($user->getName());
@@ -152,10 +160,27 @@ class DataBaseClass
         if ($result = $conn->query($sql)) {
             //$result->free();
         } else {
-            echo "Ошибка: " . $conn->error;
+            $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
     }
 
+    public function checkIdInDB($id)
+    {
+        $conn = $this->createConnection();
+        $db_table = $this->dbinfo['table'];
+        $sql = "SELECT * FROM $db_table WHERE id=$id";
+        $log = "";
+        if ($result = $conn->query($sql)) {
+
+            $result->free();
+            $conn->close();
+            return true;
+        } else {
+            $conn->close();
+            return false;
+        }
+    }
 
 }
