@@ -131,19 +131,19 @@ class User
         return $this->db->showByID($id);
     }
 
-    public function updateUsers(): void
-    {
-        $this->db->updateDB();
-    }
+//    public function updateUsers(): void
+//    {
+//        $this->db->updateDB();
+//    }
 
     public function deleteUserFromDB($id): void
     {
         $this->db->deleteUser($id);
     }
 
-    public function editUserInfoInDB($id, $user): void
+    public function editUserInfoInDB($user): void
     {
-        $this->db->editUser($id, $user);
+        $this->db->editUser($user);
     }
 
     public function checkId($id){

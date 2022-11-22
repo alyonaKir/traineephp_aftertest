@@ -34,6 +34,7 @@
         </div>
         <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user">Add user</button>
     </form>
+    <?php include 'back_button.php'?>
 </div>
 </body>
 </html>

@@ -18,7 +18,7 @@ class  App
         $router->get("/user", [(new UserController()), 'showByID']);
         $router->post("/users/delete", [(new UserController()), 'delete']);
         $router->post("/users/edit", [(new UserController()), 'edit']);
-        $router->post("/users/update", [(new UserController()), 'update']);
+//        $router->post("/users/update", [(new UserController()), 'update']);
         $router->post("/users/new", [(new UserController()), 'newUser']);
         $router->post("/users/create", [(new UserController()), 'createUser']);
         $router->run();

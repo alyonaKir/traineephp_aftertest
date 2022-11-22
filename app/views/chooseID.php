@@ -16,8 +16,9 @@
             <input name="id" class="form-control" id="floatingInput" placeholder="ID">
             <label for="floatingInput">ID</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Show user by iD</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Show user by ID</button>
     </form>
+<?php include 'back_button.php'?>
 </div>
 </body>
 </html>

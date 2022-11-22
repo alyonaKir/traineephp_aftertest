@@ -41,6 +41,7 @@ function showAll($users)
         ?>
         </tbody>
     </table>
+    <?php include 'back_button.php'?>
     </body>
     <?php ;
 } ?>

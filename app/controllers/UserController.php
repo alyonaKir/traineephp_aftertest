@@ -82,17 +82,18 @@ class UserController
     {
        $id = $_SESSION['id'];
        $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active"?1:0);
-       $this->user->editUserInfoInDB($id, $user);
+       $user->setId($id);
+       $this->user->editUserInfoInDB($user);
        require "app/views/mainPage.php";
     }
 
-    public function update(): void
-    {
-        if ($_POST['btnUpdate'] != null) {
-            echo 'update';
-            $this->user->updateUsers();
-        }
-    }
+//    public function update(): void
+//    {
+//        if ($_POST['btnUpdate'] != null) {
+//            echo 'update';
+//            $this->user->updateUsers();
+//        }
+//    }
 
     public function delete(): void
     {

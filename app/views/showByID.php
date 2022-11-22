@@ -40,11 +40,7 @@
         <button name="btnDel" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Delete user</button>
     </form>
 
-    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/">
-        <button name="btnUpdate" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Return to main page</button>
-    </form>
-
-
+    <?php include 'back_button.php'?>
 </div>
 </body>
 <?php }?>

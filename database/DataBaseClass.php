@@ -92,22 +92,28 @@ class DataBaseClass
         return $users;
     }
 
-    public function updateDB()
-    {
-        $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
-        $sql = "SELECT * FROM $db_table ORDER BY NEWID()";
-        $log = "";
-        $conn->query($sql);
-        if ($conn->query($sql) === TRUE) {
-            $log = "Successful query";
-        } else {
-            $log = "Error query: " . $conn->error;
-        }
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
-        $conn->close();
-    }
+//    public function updateDB()
+//    {
+//        $conn = $this->createConnection();
+//        $db_table = $this->dbinfo['table'];
+//        $sql = "SELECT * FROM $db_table ORDER BY NEWID()";
+//        $log = "";
+//        $conn->query($sql);
+//        if ($conn->query($sql) === TRUE) {
+//            $log = "Successful query";
+//        } else {
+//            $log = "Error query: " . $conn->error;
+//        }
+//        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+//        $conn->close();
+//    }
 
+    /**
+     * delete user by id from db
+     *
+     * @param $id
+     * @return void
+     */
     public function deleteUser($id)
     {
         $conn = $this->createConnection();
@@ -123,6 +129,12 @@ class DataBaseClass
         $conn->close();
     }
 
+    /**
+     * get user from db by id
+     *
+     * @param $id
+     * @return User
+     */
     public function showByID($id): User
     {
         $conn = $this->createConnection();
@@ -144,11 +156,19 @@ class DataBaseClass
 
     }
 
-    public function editUser($id, $user)
+    /**
+     * change info in db by id
+     *
+     * @param $id
+     * @param $user
+     * @return void
+     */
+    public function editUser($user)
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
         $log = "";
+        $id = $user->getId();
 
         $userEmail = $conn->real_escape_string($user->getEmail());
         $userName = $conn->real_escape_string($user->getName());
@@ -166,6 +186,12 @@ class DataBaseClass
         file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
     }
 
+    /**
+     * check if there are user with this id
+     *
+     * @param $id
+     * @return bool
+     */
     public function checkIdInDB($id)
     {
         $conn = $this->createConnection();
