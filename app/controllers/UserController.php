@@ -64,6 +64,9 @@ class UserController
     public function showByID(): void
     {
         require 'app/views/chooseID.php';
+        $arrUsers = $this->user->showAllUsersFromDB();
+        //var_dump($arrUsers);
+        showAllID($arrUsers);
         $id = $_GET['id'];
         $_SESSION = $_GET;
         if($this->user->checkId($id)){
