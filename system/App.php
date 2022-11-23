@@ -20,10 +20,10 @@ class  App
         $router->get("/user", [new UserController(), 'chooseByID']);
         $router->post("/user/[0-9]+", [new UserController(), 'showByID']);
         $router->get("/user/[0-9]+", [new UserController(), 'showByID']);
-        $router->post("/users/delete/[0-9]+", [new UserController(), 'delete']);
-        $router->post("/users/edit/[0-9]+", [new UserController(), 'edit']);
-        $router->get("/users/delete/[0-9]+", [new UserController(), 'delete']);
-        $router->get("/users/edit/[0-9]+", [new UserController(), 'edit']);
+        $router->post("/user/delete/[0-9]+", [new UserController(), 'delete']);
+        $router->post("/user/edit/[0-9]+", [new UserController(), 'edit']);
+        $router->get("/user/delete/[0-9]+", [new UserController(), 'delete']);
+        $router->get("/user/edit/[0-9]+", [new UserController(), 'edit']);
         $router->post("/users/new", [new UserController(), 'newUser']);
         $router->post("/users/create", [new UserController(), 'createUser']);
         $router->run();

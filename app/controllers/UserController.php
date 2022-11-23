@@ -88,13 +88,14 @@ class UserController
 
     public function edit(): void
     {
+        $this->showByID();
         //$id = $_SESSION['id'];
         $id = $this->getIdFromURL();
         //echo $id;
         $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
         $user->setId($id);
         $this->user->editUserInfoInDB($user);
-        require "app/views/mainPage.php";
+        //require "app/views/mainPage.php";
     }
 
 //    public function update(): void
@@ -107,11 +108,12 @@ class UserController
 
     public function delete(): void
     {
+        $this->showByID();
         //$id = $_SESSION['id'];
         $id = $this->getIdFromURL();
         if ($_POST['btnDel'] != null) {
             $this->user->deleteUserFromDB($id);
-            require 'app/views/mainPage.php';
+            //require 'app/views/mainPage.php';
         }
     }
 }

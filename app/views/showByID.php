@@ -10,7 +10,7 @@
 <?php function show (\Models\User $user, $id):void{?>
 <body>
 <div id="nav">
-    <form method="post" action="/users/edit/<?php echo $id;?>">
+    <form method="post" action="/user/edit/<?php echo $id;?>">
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="<?php echo $user->getEmail();?>">
 <!--            <label for="floatingInput"> </label>-->
@@ -36,7 +36,7 @@
         <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Edit user</button>
     </form>
 
-    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/delete/<?php echo $id;?>" onsubmit="return deleletconfig()">
+    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/user/delete/<?php echo $id;?>" onsubmit="return deleletconfig()">
         <button name="btnDel" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Delete user</button>
     </form>
 
