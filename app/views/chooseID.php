@@ -16,7 +16,8 @@ function showAllID($users)
     ?>
     <body>
     <div id="nav">
-        <form  action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/user/1" method="post" name="userForm">
+<!--        action="http://--><?php //echo $_SERVER["HTTP_HOST"] ?><!--/user/1"-->
+        <form method="post" name="userForm">
             <div class="form-floating">
                 <select name="id" class="form-select" aria-label="Default select example">
                     <?php

@@ -65,6 +65,11 @@ class UserController
         require 'app/views/chooseID.php';
         $arrUsers = $this->user->showAllUsersFromDB();
         showAllID($arrUsers);
+        if($_POST['id'] !=null){
+            $id = $_POST['id'];
+            header('Location: http://'.$_SERVER["HTTP_HOST"].'/user/'.$id);
+            exit();
+        }
     }
 
     public function showByID(): void

@@ -19,9 +19,43 @@ class DataBaseClass
     {
         $this->dbinfo = require 'dbInfo.php';
         $this->db = new PDO('mysql:host=' . $this->dbinfo['host'] . ';dbname=' . $this->dbinfo['base'], $this->dbinfo['user'], $this->dbinfo['password']);
-        //$this->db = $this->createConnection();
     }
 
+    public function checkDB() : void
+    {
+        $users = array();
+        $conn = $this->createConnection();
+        $db_table = $this->dbinfo['table'];
+        $sql = "SELECT * FROM $db_table";
+        $log = "";
+        if ($result = $conn->query($sql)) {
+            $rowsCount = $result->num_rows; // количество полученных строк
+
+            //echo '<pre>';
+            foreach ($result as $row) {
+                if ($row['email'] == null) {
+                    $this->deleteUser($row['id']);
+                    continue;
+                }
+                if ($row['name'] == null) {
+                    $this->deleteUser($row['id']);
+                    continue;
+                }
+                if ($row['gender'] == null) {
+                    $this->deleteUser($row['id']);
+                    continue;
+                }
+                if ($row['active'] == null) {
+                    $this->deleteUser($row['id']);
+                }
+            }
+            $result->free();
+        } else {
+            $log = "Ошибка: " . $conn->error;
+        }
+        $conn->close();
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+    }
 
     private function createConnection()
     {
@@ -63,7 +97,6 @@ class DataBaseClass
         }
         file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
     }
-
 
 
     /**
@@ -166,7 +199,7 @@ class DataBaseClass
      * @param $user
      * @return void
      */
-    public function editUser($user) : void
+    public function editUser($user): void
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];

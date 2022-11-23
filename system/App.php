@@ -4,16 +4,20 @@ include 'vendor/autoload.php';
 use App\controllers\AppController;
 use App\controllers\UserController;
 use Bootstrap\Router;
+use DataBase\DataBaseClass;
 
 class  App
 {
     public function run() : void
     {
+        $db = new DataBaseClass();
+        $db->checkDB();
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
         $router->post("",[new AppController(), 'index']);
         $router->post("/users", [new UserController(), 'showAll']);
         $router->post("/user", [new UserController(), 'chooseByID']);
+        $router->get("/user", [new UserController(), 'chooseByID']);
         $router->post("/user/[0-9]+", [new UserController(), 'showByID']);
         $router->get("/user/[0-9]+", [new UserController(), 'showByID']);
         $router->post("/users/delete/[0-9]+", [new UserController(), 'delete']);
