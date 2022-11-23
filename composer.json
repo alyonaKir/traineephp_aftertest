@@ -18,6 +18,7 @@
     ],
     "require": {
         "ext-pdo": "*",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "ext-http": "*"
     }
 }

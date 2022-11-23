@@ -4,7 +4,6 @@ include 'vendor/autoload.php';
 
 use Models\User;
 
-session_start();
 class UserController
 {
 
@@ -37,7 +36,7 @@ class UserController
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
-            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active"?1:0);
+            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
             $this->user->addUsertoDB();
             require "app/views/mainPage.php";
         }
@@ -61,21 +60,22 @@ class UserController
     }
 
 
-    public function showByID(): void
+    public function chooseByID(): void
     {
         require 'app/views/chooseID.php';
         $arrUsers = $this->user->showAllUsersFromDB();
-        //var_dump($arrUsers);
         showAllID($arrUsers);
-        $id = $_GET['id'];
-        $_SESSION = $_GET;
-        if($this->user->checkId($id)){
-        $user = $this->user->showUserByID($id);
-        //echo $id;
-        require 'app/views/showByID.php';
-        show($user);
-        }
-        else{
+    }
+
+    public function showByID(): void
+    {
+        $id = $_POST['id'] ?? $this->getIdFromURL();
+        if ($this->user->checkId($id)) {
+            //http_redirect("http://" . $_SERVER["HTTP_HOST"] . "/user/" . $id);
+            $user = $this->user->showUserByID($id);
+            require 'app/views/showByID.php';
+            show($user, $id);
+        } else {
             echo "<script>alert('There are no such users. Choose another.')</script>";
             require 'app/views/chooseID.php';
         }
@@ -83,11 +83,13 @@ class UserController
 
     public function edit(): void
     {
-       $id = $_SESSION['id'];
-       $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active"?1:0);
-       $user->setId($id);
-       $this->user->editUserInfoInDB($user);
-       require "app/views/mainPage.php";
+        //$id = $_SESSION['id'];
+        $id = $this->getIdFromURL();
+        //echo $id;
+        $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
+        $user->setId($id);
+        $this->user->editUserInfoInDB($user);
+        require "app/views/mainPage.php";
     }
 
 //    public function update(): void
@@ -100,8 +102,9 @@ class UserController
 
     public function delete(): void
     {
-        $id = $_SESSION['id'];
-        if($_POST['btnDel'] != null) {
+        //$id = $_SESSION['id'];
+        $id = $this->getIdFromURL();
+        if ($_POST['btnDel'] != null) {
             $this->user->deleteUserFromDB($id);
             require 'app/views/mainPage.php';
         }

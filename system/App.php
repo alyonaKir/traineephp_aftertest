@@ -9,22 +9,20 @@ class  App
 {
     public function run() : void
     {
-        //$id = 4;
         $router = new Router();
-        $router->get("/",[(new AppController()), 'index']);
-        $router->post("/",[(new AppController()), 'index']);
-        $router->post("/users", [(new UserController()), 'showAll']);
-        $router->post("/user", [(new UserController()), 'showByID']);
-        $router->get("/user", [(new UserController()), 'showByID']);
-        $router->post("/users/delete", [(new UserController()), 'delete']);
-        $router->post("/users/edit", [(new UserController()), 'edit']);
-//        $router->post("/users/update", [(new UserController()), 'update']);
-        $router->post("/users/new", [(new UserController()), 'newUser']);
-        $router->post("/users/create", [(new UserController()), 'createUser']);
+        $router->get("",[new AppController(), 'index']);
+        $router->post("",[new AppController(), 'index']);
+        $router->post("/users", [new UserController(), 'showAll']);
+        $router->post("/user", [new UserController(), 'chooseByID']);
+        $router->post("/user/[0-9]+", [new UserController(), 'showByID']);
+        $router->get("/user/[0-9]+", [new UserController(), 'showByID']);
+        $router->post("/users/delete/[0-9]+", [new UserController(), 'delete']);
+        $router->post("/users/edit/[0-9]+", [new UserController(), 'edit']);
+        $router->get("/users/delete/[0-9]+", [new UserController(), 'delete']);
+        $router->get("/users/edit/[0-9]+", [new UserController(), 'edit']);
+        $router->post("/users/new", [new UserController(), 'newUser']);
+        $router->post("/users/create", [new UserController(), 'createUser']);
         $router->run();
-        $router->addNotFoundHandler(function (){
-            echo 'not found';
-        });
     }
 }
 

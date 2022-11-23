@@ -7,10 +7,10 @@
     <link href="/assets/css/style.css" rel="stylesheet">
     <script src="/assets/javascript/confirm.js"></script>
 </head>
-<?php function show (\Models\User $user):void{?>
+<?php function show (\Models\User $user, $id):void{?>
 <body>
 <div id="nav">
-    <form method="post" action="/users/edit">
+    <form method="post" action="/users/edit/<?php echo $id;?>">
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="<?php echo $user->getEmail();?>">
 <!--            <label for="floatingInput"> </label>-->
@@ -33,10 +33,10 @@
                 <option value="inactive" <?php if(!$user->isActive()) echo "selected";?>>inactive</option>
             </select>
         </div>
-        <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Edit users</button>
+        <button name="btnShow" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Edit user</button>
     </form>
 
-    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/delete" onsubmit="return deleletconfig()">
+    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/delete/<?php echo $id;?>" onsubmit="return deleletconfig()">
         <button name="btnDel" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Delete user</button>
     </form>
 

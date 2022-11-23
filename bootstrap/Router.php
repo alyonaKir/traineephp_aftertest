@@ -1,56 +1,88 @@
 <?php
+
 namespace Bootstrap;
+
 class Router
 {
+    private const REGEXES = ['[0-9]+', '[a-z]+'];
 
-    private array $handlers;
-    private $notFoundHandler;
+    public array $routeCollection;
 
-    public function get(string $path, $handler): void
+    public array $args = [];
+
+    public function run(): void
     {
-        $this->addHandler($path, 'GET', $handler);
-    }
+        $urlParts = parse_url($_SERVER['REQUEST_URI']);
+        $isMatched = false;
 
-    public function post(string $path, $handler): void
-    {
-        $this->addHandler($path, 'POST', $handler);
-    }
+        foreach ($this->routeCollection[$_SERVER['REQUEST_METHOD']] as $route) {
+            $isMatched = preg_match("/^" . str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
 
-    private function addHandler($path, $method, $handler): void
-    {
-        $this->handlers[$method . $path] = [
-            'path' => $path,
-            'method' => $method,
-            'handler' => $handler,
-        ];
-    }
-
-    public function addNotFoundHandler($handler)
-    {
-        $this->notFoundHandler = $handler;
-    }
-
-    public function run()
-    {
-        $request_uri = parse_url($_SERVER['REQUEST_URI']);
-        $request_path = $request_uri['path'];
-        $method = $_SERVER['REQUEST_METHOD'];
-        $callback = null;
-        foreach ($this->handlers as $handler) {
-            if ($handler['path'] === $request_path && $method === $handler['method']) {
-                $callback = $handler['handler'];
-            }
-        }
-        if (!$callback) {
-            header("HTTP/1.0 404 Not Found");
-            if (!empty($this->notFoundHandler)) {
-                $callback = $this->notFoundHandler;
+            if ($isMatched) {
+                $this->setPostBody();
+                $this->callMethod($route, $urlParts);
+                break;
             }
         }
 
-        call_user_func_array($callback, [
-            array_merge($_GET, $_POST)
-        ]);
+        if (!$isMatched) {
+            echo '404 not Found';
+        }
+    }
+
+    private function setPostBody(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = file_get_contents('php://input');
+            $data = json_decode($data, true);
+
+            foreach ($data as $key => $value) {
+                $_POST[$key] = $value;
+            }
+        }
+    }
+
+    private function callMethod(array $route, array $urlParts): void
+    {
+        $segments = explode('/', $route['uri']);
+
+        foreach ($segments as $segmentKey => $segment) {
+            if (in_array($segment, self::REGEXES)) {
+                $uriSegments = explode('/', $urlParts['path']);
+                $this->args[] = $uriSegments[$segmentKey];
+            }
+        }
+
+        $route['callback'](...$this->args);
+    }
+
+    public function post(string $uri, callable $callback): void
+    {
+        $this->add('POST', $uri, $callback);
+    }
+
+    public function get(string $uri, callable $callback): void
+    {
+        $this->add('GET', $uri, $callback);
+    }
+
+    public function put(string $uri, callable $callback): void
+    {
+        $this->add('PUT', $uri, $callback);
+    }
+
+    public function delete(string $uri, callable $callback): void
+    {
+        $this->add('DELETE', $uri, $callback);
+    }
+
+    public function patch(string $uri, callable $callback): void
+    {
+        $this->add('PATCH', $uri, $callback);
+    }
+
+    public function add(string $method, string $uri, callable $callback): void
+    {
+        $this->routeCollection[$method][] = ['uri' => $uri, 'callback' => $callback];
     }
 }
-?>
