@@ -238,6 +238,9 @@ class DataBaseClass
         $log = "";
         if ($result = $conn->query($sql)) {
 
+            if($result->num_rows==0){
+                return false;
+            }
             $result->free();
             $conn->close();
             return true;

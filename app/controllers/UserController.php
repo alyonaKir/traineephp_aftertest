@@ -81,8 +81,8 @@ class UserController
             require 'app/views/showByID.php';
             show($user, $id);
         } else {
-            echo "<script>alert('There are no such users. Choose another.')</script>";
-            require 'app/views/chooseID.php';
+            header('Location: http://'.$_SERVER["HTTP_HOST"].'/user');
+            exit();
         }
     }
 
