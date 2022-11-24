@@ -14,10 +14,9 @@ class  App
         $db->checkDB();
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
-        $router->post("",[new AppController(), 'index']);
+//        $router->post("",[new AppController(), 'index']);
         $router->post("/users", [new UserController(), 'showAll']);
-        $router->post("/user", [new UserController(), 'chooseByID']);
-        $router->get("/user", [new UserController(), 'chooseByID']);
+        $router->get("/users", [new UserController(), 'showAll']);
         $router->post("/user/[0-9]+", [new UserController(), 'showByID']);
         $router->get("/user/[0-9]+", [new UserController(), 'showByID']);
         $router->post("/user/delete/[0-9]+", [new UserController(), 'delete']);
@@ -26,6 +25,7 @@ class  App
         $router->get("/user/edit/[0-9]+", [new UserController(), 'edit']);
         $router->post("/users/new", [new UserController(), 'newUser']);
         $router->post("/users/create", [new UserController(), 'createUser']);
+        $router->get("/users/create", [new UserController(), 'createUser']);
         $router->run();
     }
 }

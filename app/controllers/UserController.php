@@ -16,8 +16,13 @@ class UserController
 
     public function createUser(): void
     {
+
         if ($_POST['btnAdd'] != null) {
             require "app/views/new.php";
+        }
+        if ($_GET['btnMain'] != null) {
+            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+            exit();
         }
     }
 
@@ -31,6 +36,7 @@ class UserController
 
     public function newUser(): void
     {
+
         if (isset($_POST['btnAdd'])) {
             $email = $this->test_input($_POST["email"]);
             $name = $this->test_input($_POST["name"]);
@@ -48,6 +54,10 @@ class UserController
         $arrUsers = $this->user->showAllUsersFromDB();
         //var_dump($arrUsers);
         showAll($arrUsers);
+        if ($_GET['btnMain'] != null) {
+            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+            exit();
+        }
     }
 
     private function getIdFromURL(): int
@@ -59,62 +69,41 @@ class UserController
         return $url[count($url) - 1];
     }
 
-
-    public function chooseByID(): void
-    {
-        require 'app/views/chooseID.php';
-        $arrUsers = $this->user->showAllUsersFromDB();
-        showAllID($arrUsers);
-        if($_POST['id'] !=null){
-            $id = $_POST['id'];
-            header('Location: http://'.$_SERVER["HTTP_HOST"].'/user/'.$id);
-            exit();
-        }
-    }
-
     public function showByID(): void
     {
         $id = $_POST['id'] ?? $this->getIdFromURL();
         if ($this->user->checkId($id)) {
-            //http_redirect("http://" . $_SERVER["HTTP_HOST"] . "/user/" . $id);
             $user = $this->user->showUserByID($id);
             require 'app/views/showByID.php';
             show($user, $id);
         } else {
-            header('Location: http://'.$_SERVER["HTTP_HOST"].'/user');
+            header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
             exit();
         }
     }
 
     public function edit(): void
     {
-        $this->showByID();
-        //$id = $_SESSION['id'];
-        $id = $this->getIdFromURL();
-        //echo $id;
-        $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
-        $user->setId($id);
-        $this->user->editUserInfoInDB($user);
-        //require "app/views/mainPage.php";
+        if ($_POST['btnEdit'] != null) {
+            $this->showByID();
+        } else {
+            $id = $this->getIdFromURL();
+            $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
+            var_dump($user);
+            $user->setId($id);
+            $this->user->editUserInfoInDB($user);
+            header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
+            exit();
+        }
     }
-
-//    public function update(): void
-//    {
-//        if ($_POST['btnUpdate'] != null) {
-//            echo 'update';
-//            $this->user->updateUsers();
-//        }
-//    }
 
     public function delete(): void
     {
-        $this->showByID();
-        //$id = $_SESSION['id'];
         $id = $this->getIdFromURL();
-        if ($_POST['btnDel'] != null) {
-            $this->user->deleteUserFromDB($id);
-            //require 'app/views/mainPage.php';
-        }
+        $this->user->deleteUserFromDB($id);
+
+        header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
+        exit();
     }
 }
 

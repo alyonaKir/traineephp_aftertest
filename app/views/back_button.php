@@ -1,3 +1,3 @@
-<form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>">
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Main page</button>
+<form method="get">
+        <button name="btnMain" class="w-100 btn btn-lg btn-primary" type="submit" value="btn">Main page</button>
     </form>
