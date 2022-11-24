@@ -14,5 +14,7 @@ form{
 .form-floating{
     margin: 10px 0px 10px 0px;
 }
+@media screen and (max-width: 768px) {
+}
 
 

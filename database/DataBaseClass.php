@@ -209,7 +209,7 @@ class DataBaseClass
         $userEmail = $conn->real_escape_string($user->getEmail());
         $userName = $conn->real_escape_string($user->getName());
         $userGender = $conn->real_escape_string($user->getGender());
-        $userActive = $conn->real_escape_string($user->isActive());
+        $userActive = $conn->real_escape_string($user->isActive()?1:0);
 
         $sql = "UPDATE $db_table SET email = '$userEmail', name = '$userName', gender = '$userGender', active = '$userActive' WHERE id = $id";
 

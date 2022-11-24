@@ -89,7 +89,6 @@ class UserController
         } else {
             $id = $this->getIdFromURL();
             $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
-            var_dump($user);
             $user->setId($id);
             $this->user->editUserInfoInDB($user);
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
