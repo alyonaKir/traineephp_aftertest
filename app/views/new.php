@@ -8,8 +8,8 @@
     <script src="/assets/javascript/validation.js"></script>
 </head>
 <body>
-<div id="nav">
-    <form action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/new" onsubmit="return validateForm()" method="post" name="userForm">
+<div class="nav w-50 p-10">
+    <form class="w-100 m-1" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/users/new" onsubmit="return validateForm()" method="post" name="userForm">
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>

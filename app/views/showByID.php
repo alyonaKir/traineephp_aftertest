@@ -9,7 +9,7 @@
 </head>
 <?php function show (\Models\User $user, $id):void{?>
 <body>
-<div id="nav">
+<div class="nav w-50 p-10">
     <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"]?>/user/edit/<?php echo $id;?>">
         <div class="form-floating">
             <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="<?php echo $user->getEmail();?>">

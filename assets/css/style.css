@@ -1,8 +1,8 @@
 form{
-    width: 300px;
-    margin: 20px;
+    width: 100%;
+    margin: 2px;
 }
-#nav{
+.nav{
     padding: 10px;
     position: fixed; top: 50%; left: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -14,7 +14,51 @@ form{
 .form-floating{
     margin: 10px 0px 10px 0px;
 }
-@media screen and (max-width: 768px) {
+
+@media (max-width: 206px){
+    form{
+        width: 50%;
+    }
+    .nav{
+        width: 150px;
+        border-radius: 20px;
+    }
+    .btn{
+        font-size: 9px;
+    }
 }
 
+@media (max-width: 397px){
+    .btn{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 249px){
+   .nav{
+       width: 70%;
+       padding: 0;
+       border-radius: 10px;
+       /*display: none;*/
+   }
+    form{
+        width: 100%;
+    }
+    .btn{
+        width: 100%;
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 115px){
+    .nav{
+        width: 70%;
+        border-radius: 10px;
+        /*display: none;*/
+    }
+    .btn{
+        width: 20%;
+        font-size: 9px;
+    }
+}
 
