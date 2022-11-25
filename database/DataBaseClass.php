@@ -3,29 +3,42 @@
 namespace DataBase;
 include 'vendor/autoload.php';
 
-use Cassandra\Function_;
 use Models\User;
 use PDO;
 
 class DataBaseClass
 {
+    private static $instance = null;
     private $db;
     private $dbinfo;
 
     /**
      * connect to the db, db_info input
      */
-    public function __construct()
+    private function __construct()
     {
         $this->dbinfo = require 'dbInfo.php';
         $this->db = new PDO('mysql:host=' . $this->dbinfo['host'] . ';dbname=' . $this->dbinfo['base'], $this->dbinfo['user'], $this->dbinfo['password']);
     }
 
-    public function checkDB() : void
+    private function __clone(){}
+    private function __wakeup(){}
+
+    public static function getInstance() : DataBaseClass{
+            if(self::$instance!=null){
+                return self::$instance;
+            }
+            return new self();
+        }
+
+
+
+    public static function checkDB() : void
     {
         $users = array();
-        $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db = self::getInstance();
+        $conn = $db->createConnection();
+        $db_table = $db->dbinfo['table'];
         $sql = "SELECT * FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
@@ -34,19 +47,19 @@ class DataBaseClass
             //echo '<pre>';
             foreach ($result as $row) {
                 if ($row['email'] == null) {
-                    $this->deleteUser($row['id']);
+                    $db->deleteUser($row['id']);
                     continue;
                 }
                 if ($row['name'] == null) {
-                    $this->deleteUser($row['id']);
+                    $db->deleteUser($row['id']);
                     continue;
                 }
                 if ($row['gender'] == null) {
-                    $this->deleteUser($row['id']);
+                    $db->deleteUser($row['id']);
                     continue;
                 }
                 if ($row['active'] == null) {
-                    $this->deleteUser($row['id']);
+                    $db->deleteUser($row['id']);
                 }
             }
             $result->free();

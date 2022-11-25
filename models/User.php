@@ -27,7 +27,7 @@ class User
         $this->name = $name;
         $this->gender = $gender;
         $this->active = $active;
-        $this->db = new DataBaseClass();
+        $this->db = DataBaseClass::getInstance();
     }
 
     public function __toString(): string

@@ -10,8 +10,9 @@ class  App
 {
     public function run() : void
     {
-        $db = new DataBaseClass();
-        $db->checkDB();
+//        $db = new DataBaseClass();
+//        $db->checkDB();
+        DataBaseClass::checkDB();
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
 //        $router->post("",[new AppController(), 'index']);
