@@ -17,7 +17,8 @@ function showAll($users, $page, $offset, $total_pages)
 {
     ?>
     <body>
-    <form method="post">
+    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/users/deleteChecked"
+          onsubmit="return deleletconfig()">
     <table class="table">
         <thead class="thead-light">
         <tr>

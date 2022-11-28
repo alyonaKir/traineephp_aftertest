@@ -63,6 +63,10 @@ class UserController
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
             exit();
         }
+
+    }
+
+    public function deleteChecked(){
         var_dump($_POST);
         if($_POST['btnCheck']!=null) {
             for ($i = 0; $i < count($_POST['users']); $i++) {
@@ -72,7 +76,6 @@ class UserController
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
         exit();
     }
-
     private function getIdFromURL(): int
     {
         $url = $_SERVER['REQUEST_URI'];

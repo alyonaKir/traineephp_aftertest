@@ -28,6 +28,7 @@ class  App
         $router->post("/users/new", [new UserController(), 'newUser']);
         $router->post("/users/create", [new UserController(), 'createUser']);
         $router->get("/users/create", [new UserController(), 'createUser']);
+        $router->post("/users/deleteChecked", [new UserController(), 'deleteChecked']);
         $router->run();
     }
 }
