@@ -6,17 +6,23 @@ use Models\User;
 
 class UserController
 {
-
     private User $user;
 
     public function __construct()
     {
-        $this->user = new User('', '', '', 1);
+        if ($_POST['email'] != null) {
+            $email = $this->test_input($_POST["email"]);
+            $name = $this->test_input($_POST["name"]);
+            $gender = $this->test_input($_POST["gender"]);
+            $status = $this->test_input($_POST["status"]);
+            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0);
+        } else {
+            $this->user = new User('', '', '', 1);
+        }
     }
 
     public function createUser(): void
     {
-
         if ($_POST['btnAdd'] != null) {
             require "app/views/new.php";
         }
@@ -36,23 +42,14 @@ class UserController
 
     public function newUser(): void
     {
-
-        if (isset($_POST['btnAdd'])) {
-            $email = $this->test_input($_POST["email"]);
-            $name = $this->test_input($_POST["name"]);
-            $gender = $this->test_input($_POST["gender"]);
-            $status = $this->test_input($_POST["status"]);
-            $this->user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
-            $this->user->addUsertoDB();
-            require "app/views/mainPage.php";
-        }
+        $this->user->addUsertoDB();
+        require "app/views/mainPage.php";
     }
 
     public function showAll(): void
     {
         require "app/views/showAll.php";
         $arrUsers = $this->user->showAllUsersFromDB();
-        //var_dump($arrUsers);
         showAll($arrUsers);
         if ($_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
@@ -88,9 +85,8 @@ class UserController
             $this->showByID();
         } else {
             $id = $this->getIdFromURL();
-            $user = new User($_POST['email'], $_POST['name'], $_POST['gender'], $_POST['status'] == "active" ? 1 : 0);
-            $user->setId($id);
-            $this->user->editUserInfoInDB($user);
+            $this->user->setId($id);
+            $this->user->editUserInfoInDB($this->user);
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
             exit();
         }

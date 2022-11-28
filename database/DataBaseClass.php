@@ -32,7 +32,11 @@ class DataBaseClass
         }
 
 
-
+    /**
+     * check is db not null
+     *
+     * @return void
+     */
     public static function checkDB() : void
     {
         $users = array();
@@ -125,9 +129,7 @@ class DataBaseClass
         $sql = "SELECT * FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
-            $rowsCount = $result->num_rows; // количество полученных строк
-
-            //echo '<pre>';
+            $rowsCount = $result->num_rows;
             foreach ($result as $row) {
                 $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
                 $users[count($users) - 1]->setId($row['id']);
@@ -141,29 +143,13 @@ class DataBaseClass
         return $users;
     }
 
-//    public function updateDB()
-//    {
-//        $conn = $this->createConnection();
-//        $db_table = $this->dbinfo['table'];
-//        $sql = "SELECT * FROM $db_table ORDER BY NEWID()";
-//        $log = "";
-//        $conn->query($sql);
-//        if ($conn->query($sql) === TRUE) {
-//            $log = "Successful query";
-//        } else {
-//            $log = "Error query: " . $conn->error;
-//        }
-//        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
-//        $conn->close();
-//    }
-
     /**
      * delete user by id from db
      *
      * @param $id
      * @return void
      */
-    public function deleteUser($id)
+    public function deleteUser($id) : void
     {
         $conn = $this->createConnection();
         $db_table = $this->dbinfo['table'];
@@ -193,7 +179,6 @@ class DataBaseClass
         if ($result = $conn->query($sql)) {
             foreach ($result as $row) {
                 $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
-
             }
             $result->free();
         } else {
@@ -202,7 +187,6 @@ class DataBaseClass
         $conn->close();
         file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
         return $user;
-
     }
 
     /**
@@ -227,11 +211,9 @@ class DataBaseClass
         $sql = "UPDATE $db_table SET email = '$userEmail', name = '$userName', gender = '$userGender', active = '$userActive' WHERE id = $id";
 
         if ($result = $conn->query($sql)) {
-            //$result->free();
-
+            $log = "Successfully edited";
         } else {
             $log = "Ошибка: " . $conn->error;
-
         }
         $conn->close();
         file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
