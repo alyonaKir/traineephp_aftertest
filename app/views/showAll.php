@@ -7,9 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="/assets/css/btn_users.css" rel="stylesheet">
     <link href="/assets/css/media.css" rel="stylesheet">
     <script src="/assets/javascript/confirm.js"></script>
+    <script src="/assets/javascript/infinityScroll.js"></script>
     <title>All users</title>
 </head>
 <?php
@@ -19,7 +22,14 @@ function showAll($users, $page, $offset, $total_pages)
     <body>
     <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/users/deleteChecked"
           onsubmit="return deleletconfig()">
-    <table class="table">
+
+        <a class="btn btn-primary" href="?page=1">First</a>
+        <a class="btn <?php if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
+        <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1); $page++;} ?>">Next</a>
+        <a class="btn btn-primary" href="?page=<?php echo $total_pages; $page=$total_pages?>">Last</a>
+        <a class="btn btn-primary" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>">Main Page</a>
+        <button name="btnCheck" class="btn btn-primary" type="submit" value="btnClick">Delete checked</button>
+    <table class="table" id ="data_preview">
         <thead class="thead-light">
         <tr>
             <th scope="col"></th>
@@ -33,10 +43,12 @@ function showAll($users, $page, $offset, $total_pages)
         <tbody>
 
         <?php
+//        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
         for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
-            ?>
+?>
+        <div class="web-post" id="<?php echo $users[$i]->getId();?>">
             <tr>
-                <td><input type="checkbox" name="users[]" value="<?php echo $users[$i]->getId()?>"></td>
+                <td><input type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
                 <td><?php echo $users[$i]->getId(); ?></td>
                 <td><?php echo $users[$i]->getEmail(); ?></td>
                 <td><?php echo $users[$i]->getName(); ?></td>
@@ -58,19 +70,15 @@ function showAll($users, $page, $offset, $total_pages)
                     </form>
                 </td>
             </tr>
+        </div>
             <?php
         }
+
         ?>
 
         </tbody>
     </table>
 
-        <a class="btn btn-primary" href="?page=1">First</a>
-        <a class="btn <?php if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
-        <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1); $page++;} ?>">Next</a>
-        <a class="btn btn-primary" href="?page=<?php echo $total_pages; $page=$total_pages?>">Last</a>
-        <a class="btn btn-primary" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>">Main Page</a>
-        <button name="btnCheck" class="btn btn-primary" type="submit" value="btnClick">Delete checked</button>
     </form>
     </body>
     <?php ;

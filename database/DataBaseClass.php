@@ -126,6 +126,8 @@ class DataBaseClass
         $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
         $sql = "SELECT * FROM $db_table";
+        //$sql = "SELECT * FROM $db_table ORDER BY `id` DESC LIMIT 5";
+//        $sql= mysql_query("select * from `products` ORDER BY `product_id` DESC LIMIT 5");
         $log = "";
         if ($result = $conn->query($sql)) {
             $rowsCount = $result->num_rows;
