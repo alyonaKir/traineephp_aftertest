@@ -13,6 +13,7 @@
     <link href="/assets/css/media.css" rel="stylesheet">
     <script src="/assets/javascript/confirm.js"></script>
     <script src="/assets/javascript/infinityScroll.js"></script>
+    <script src="/assets/javascript/selectAll.js"></script>
     <title>All users</title>
 </head>
 <?php
@@ -42,13 +43,14 @@ function showAll($users, $page, $offset, $total_pages)
         </thead>
         <tbody>
 
+        <input id="select_all" type="checkbox" name="users[]"> Select All
         <?php
 //        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
         for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
 ?>
         <div class="web-post" id="<?php echo $users[$i]->getId();?>">
             <tr>
-                <td><input type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
+                <td><input class="checkbox" type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
                 <td><?php echo $users[$i]->getId(); ?></td>
                 <td><?php echo $users[$i]->getEmail(); ?></td>
                 <td><?php echo $users[$i]->getName(); ?></td>
