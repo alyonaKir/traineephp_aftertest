@@ -43,7 +43,7 @@ function showAll($users, $page, $offset, $total_pages)
         </thead>
         <tbody>
 
-        <input id="select_all" type="checkbox" name="users[]"> Select All
+        <input id="select_all" type="checkbox"> Select All
         <?php
 //        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
         for($i = $offset; $i < (min($offset + 10, count($users))); $i++){

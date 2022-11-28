@@ -96,7 +96,7 @@ class DataBaseClass
         $gender = $user->getGender();
         $status = $user->isActive() ? 1 : 0;
         $log = "";
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         try {
 
             $this->db->exec("set names utf8");
@@ -106,6 +106,7 @@ class DataBaseClass
             $result = true;
         } catch (\PDOException $e) {
             $log = "Error: " . $e->getMessage() . "<br/>";
+            echo $log;
         }
 
         if ($result) {
