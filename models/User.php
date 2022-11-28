@@ -145,6 +145,16 @@ class User
     {
         return $this->db->checkIdInDB($id);
     }
+
+    public function getNumberPages(): int
+    {
+        if ($this->db->getRowsNumber() % 10 != 0) {
+            return $this->db->getRowsNumber() / 10 + 1;
+        } else {
+            return $this->db->getRowsNumber() / 10;
+        }
+
+    }
 }
 
 ?>

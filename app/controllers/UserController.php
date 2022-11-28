@@ -49,12 +49,28 @@ class UserController
     public function showAll(): void
     {
         require "app/views/showAll.php";
+        if (isset($_GET['page'])) {
+            $pageno = $_GET['page'];
+        } else {
+            $pageno = 1;
+        }
+        $size_page = 10;
+        $offset = ($pageno - 1) * $size_page;
         $arrUsers = $this->user->showAllUsersFromDB();
-        showAll($arrUsers);
+        showAll($arrUsers, $pageno, $offset, $this->user->getNumberPages());
+
         if ($_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
             exit();
         }
+        var_dump($_POST);
+        if($_POST['btnCheck']!=null) {
+            for ($i = 0; $i < count($_POST['users']); $i++) {
+                $this->user->deleteUserFromDB($_POST['users'][$i]);
+            }
+        }
+        header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
+        exit();
     }
 
     private function getIdFromURL(): int

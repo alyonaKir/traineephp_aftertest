@@ -31,7 +31,6 @@ class DataBaseClass
             return new self();
         }
 
-
     /**
      * check is db not null
      *
@@ -243,6 +242,24 @@ class DataBaseClass
             $conn->close();
             return false;
         }
+    }
+
+    public function getRowsNumber(): int{
+        $conn = $this->createConnection();
+        $total_rows = 0;
+        $db_table = $this->dbinfo['table'];
+        $sql = "SELECT COUNT(*) FROM $db_table";
+        $log = "";
+        if ($result = $conn->query($sql)) {
+            $total_rows = mysqli_fetch_array($result)[0];
+            $result->free();
+            return $total_rows;
+        } else {
+            $log = "Ошибка: " . $conn->error;
+        }
+        $conn->close();
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        return $total_rows;
     }
 
 }

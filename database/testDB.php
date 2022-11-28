@@ -8,8 +8,7 @@ $users = [new User("winter@game.com", "John", "male", 1),
     new User("autum@sad.com", "Karol", "female", 0)
 ];
 
-$db = new \DataBase\DataBaseClass();
 for ($i = 0; $i < count($users); $i++) {
-    $db->addInfo($users[$i]);
+    $users[$i]->addUsertoDB();
 }
 ?>

@@ -13,6 +13,7 @@ class  App
 //        $db = new DataBaseClass();
 //        $db->checkDB();
         DataBaseClass::checkDB();
+        //include 'database/testDB.php';
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
 //        $router->post("",[new AppController(), 'index']);
