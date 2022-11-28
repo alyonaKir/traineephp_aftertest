@@ -10,15 +10,15 @@ class DataBaseClass
 {
     private static $instance = null;
     private $db;
-    private $dbinfo;
+    private $dbInfo;
 
     /**
      * connect to the db, db_info input
      */
     private function __construct()
     {
-        $this->dbinfo = require 'dbInfo.php';
-        $this->db = new PDO('mysql:host=' . $this->dbinfo['host'] . ';dbname=' . $this->dbinfo['base'], $this->dbinfo['user'], $this->dbinfo['password']);
+        $this->dbInfo = require 'dbInfo.php';
+        $this->db = new PDO('mysql:host=' . $this->dbInfo['host'] . ';dbname=' . $this->dbInfo['base'], $this->dbInfo['user'], $this->dbInfo['password']);
     }
 
     private function __clone(){}
@@ -41,7 +41,7 @@ class DataBaseClass
         $users = array();
         $db = self::getInstance();
         $conn = $db->createConnection();
-        $db_table = $db->dbinfo['table'];
+        $db_table = $db->dbInfo['table'];
         $sql = "SELECT * FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
@@ -75,7 +75,7 @@ class DataBaseClass
 
     private function createConnection()
     {
-        $conn = new \mysqli($this->dbinfo['host'], $this->dbinfo['user'], $this->dbinfo['password'], $this->dbinfo['base']);
+        $conn = new \mysqli($this->dbInfo['host'], $this->dbInfo['user'], $this->dbInfo['password'], $this->dbInfo['base']);
         if ($conn->connect_error) {
             die("Ошибка: " . $conn->connect_error);
         }
@@ -124,7 +124,7 @@ class DataBaseClass
     {
         $users = array();
         $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $sql = "SELECT * FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
@@ -151,7 +151,7 @@ class DataBaseClass
     public function deleteUser($id) : void
     {
         $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $sql = "DELETE FROM $db_table WHERE id=$id";
         $log = "";
         if ($conn->query($sql) === TRUE) {
@@ -172,7 +172,7 @@ class DataBaseClass
     public function showByID($id): User
     {
         $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
         $log = "";
         if ($result = $conn->query($sql)) {
@@ -198,7 +198,7 @@ class DataBaseClass
     public function editUser($user): void
     {
         $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $log = "";
         $id = $user->getId();
 
@@ -227,7 +227,7 @@ class DataBaseClass
     public function checkIdInDB($id)
     {
         $conn = $this->createConnection();
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $sql = "SELECT * FROM $db_table WHERE id=$id";
         $log = "";
         if ($result = $conn->query($sql)) {
@@ -247,7 +247,7 @@ class DataBaseClass
     public function getRowsNumber(): int{
         $conn = $this->createConnection();
         $total_rows = 0;
-        $db_table = $this->dbinfo['table'];
+        $db_table = $this->dbInfo['table'];
         $sql = "SELECT COUNT(*) FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
