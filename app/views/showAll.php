@@ -22,6 +22,7 @@ function showAll($users, $page, $offset, $total_pages)
     <table class="table">
         <thead class="thead-light">
         <tr>
+            <th scope="col"></th>
             <th scope="col">ID</th>
             <th scope="col">Email</th>
             <th scope="col">Name</th>
@@ -35,12 +36,12 @@ function showAll($users, $page, $offset, $total_pages)
         for($i = $offset; $i < (min($offset + 10, count($users))); $i++){
             ?>
             <tr>
+                <td><input type="checkbox" name="users[]" value="<?php echo $users[$i]->getId()?>"></td>
                 <td><?php echo $users[$i]->getId(); ?></td>
                 <td><?php echo $users[$i]->getEmail(); ?></td>
                 <td><?php echo $users[$i]->getName(); ?></td>
                 <td><?php echo $users[$i]->getGender(); ?></td>
                 <td><?php echo $users[$i]->isActive() ? "yes" : "no"; ?></td>
-                <td><input type="checkbox" name="users[]" value="<?php echo $users[$i]->getId()?>"></td>
                 <td>
                     <form method="post"
                           action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/user/delete/<?php echo $users[$i]->getId(); ?>"
