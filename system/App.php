@@ -10,13 +10,10 @@ class  App
 {
     public function run() : void
     {
-//        $db = new DataBaseClass();
-//        $db->checkDB();
         DataBaseClass::checkDB();
         //include 'database/testDB.php';
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
-//        $router->post("",[new AppController(), 'index']);
         $router->post("/users", [new UserController(), 'showAll']);
         $router->get("/users", [new UserController(), 'showAll']);
         $router->post("/user/[0-9]+", [new UserController(), 'showByID']);

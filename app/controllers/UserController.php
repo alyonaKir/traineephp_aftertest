@@ -67,7 +67,7 @@ class UserController
     }
 
     public function deleteChecked(){
-        if($_POST['btnCheck']!=null) {
+        if($_POST['btnCheck']!=null && $_POST['users']!=null) {
             for ($i = 0; $i < count($_POST['users']); $i++) {
                 $this->user->deleteUserFromDB($_POST['users'][$i]);
             }

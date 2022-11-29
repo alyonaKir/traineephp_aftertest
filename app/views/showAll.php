@@ -21,13 +21,7 @@ function showAll($users, $page, $offset, $total_pages)
 {
     ?>
     <body>
-    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/users/deleteChecked"
-          onsubmit="return deleletconfig()">
-
-        <a class="btn btn-primary" href="?page=1">First</a>
-        <a class="btn <?php if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
-        <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1); $page++;} ?>">Next</a>
-        <a class="btn btn-primary" href="?page=<?php echo $total_pages; $page=$total_pages?>">Last</a>
+    <form method="post" action="http://<?php echo $_SERVER["HTTP_HOST"] ?>/users/deleteChecked">
         <a class="btn btn-primary" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>">Main Page</a>
         <button name="btnCheck" class="btn btn-primary" type="submit" value="btnClick">Delete checked</button>
     <table class="table" id ="data_preview">
@@ -50,7 +44,7 @@ function showAll($users, $page, $offset, $total_pages)
 ?>
         <div class="web-post" id="<?php echo $users[$i]->getId();?>">
             <tr>
-                <td><input class="checkbox" type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
+                <td><input class="form-check-input w-50 checkbox" type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
                 <td><?php echo $users[$i]->getId(); ?></td>
                 <td><?php echo $users[$i]->getEmail(); ?></td>
                 <td><?php echo $users[$i]->getName(); ?></td>
@@ -80,7 +74,10 @@ function showAll($users, $page, $offset, $total_pages)
 
         </tbody>
     </table>
-
+        <a class="btn <?php if ($page == 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="?page=1"?>First</a>
+        <a class="btn <?php if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
+        <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1);} ?>">Next</a>
+        <a class="btn <?php if ($page == $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="?page=<?php echo $total_pages;?>">Last</a>
     </form>
     </body>
     <?php ;
