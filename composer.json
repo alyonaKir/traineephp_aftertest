@@ -17,6 +17,7 @@
         }
     ],
     "require": {
+        "twig/twig": "^3.4",
         "ext-pdo": "*",
         "ext-mysqli": "*",
         "ext-http": "*"
