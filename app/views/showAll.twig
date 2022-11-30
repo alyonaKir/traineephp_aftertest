@@ -1,0 +1,63 @@
+{% extends 'index.twig' %}
+{% block main %}
+    <body>
+    <form method="post" action="{{ deleteChecked }}">
+    <a class="btn btn-primary" href="{{ mainPage }}">Main Page</a>
+    <button name="btnCheck" class="btn btn-primary" type="submit" value="btnClick">Delete checked</button>
+    <table class="table" id ="data_preview">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">ID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Active</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <input id="select_all" type="checkbox"> Select All
+
+{#     for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
+{#        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
+        {% for user in users%}
+        <div id="<?php echo $users[$i]->getId();?>">
+            <tr>
+                <td><input class="form-check-input w-50 checkbox" type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
+                <td><?php echo $users[$i]->getId(); ?></td>
+                <td><?php echo $users[$i]->getEmail(); ?></td>
+                <td><?php echo $users[$i]->getName(); ?></td>
+                <td><?php echo $users[$i]->getGender(); ?></td>
+                <td><?php echo $users[$i]->isActive() ? "yes" : "no"; ?></td>
+                <td>
+                    <form method="post"
+                          action="{{ deleteUser }}"
+                    onsubmit="return deleletconfig()">
+                    <button name="btnDel" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Delete
+                        user
+                    </button>
+                    </form>
+                    <form method="post"
+                          action="{{ editUser }}">
+                    <button name="btnEdit" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Edit
+                        user
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        </div>
+        <?php
+        }
+
+        ?>
+
+        </tbody>
+    </table>
+    <a class="btn {% if page == 1 % } btn-secondary {% else %} btn-primary {% endif %}" href="?page=1"?>First</a>
+    <a class="btn if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
+    <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1);} ?>">Next</a>
+    <a class="btn <?php if ($page == $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="?page=<?php echo $total_pages;?>">Last</a>
+    </form>
+    </body>
+{% endblock %}

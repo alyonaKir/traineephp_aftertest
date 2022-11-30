@@ -1,0 +1,32 @@
+{% extends 'index.twig' %}
+{% block main %}
+    <div class="nav w-50 p-10">
+        <form class="w-100 m-1" action="{{ addUser }}" onsubmit="return validateForm()" method="post" name="userForm">
+        <div class="form-floating">
+            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input name="name" type="text" class="form-control" id="floatingPassword" placeholder="Name">
+            <label for="floatingPassword">Your first and last name</label>
+        </div>
+
+        <div class="form-floating">
+            <select name="gender" class="form-select" aria-label="Default select example">
+                <option value="male">male</option>
+                <option value="female">female</option>
+            </select>
+        </div>
+
+        <div class="form-floating">
+            <select name="status" class="form-select" aria-label="Default select example">
+                <option value="active">active</option>
+                <option value="inactive">inactive</option>
+            </select>
+        </div>
+        <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user">Add user</button>
+        </form>
+        <a class="btn btn-primary w-100" href="{{ mainPage }}">Main Page</a>
+        <?php include 'back_button.php'?>
+    </div>
+{% endblock %}

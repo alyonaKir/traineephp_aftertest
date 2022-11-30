@@ -3,13 +3,20 @@ namespace App\controllers;
 include 'vendor/autoload.php';
 
 use Models\User;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class UserController
 {
     private User $user;
+    private $loader;
+    private $twig;
 
     public function __construct()
     {
+        $this->loader = new FilesystemLoader(__DIR__.'/../views');
+        $this->twig = new Environment($this->loader);
+
         if ($_POST['email'] != null) {
             $email = $this->test_input($_POST["email"]);
             $name = $this->test_input($_POST["name"]);
@@ -24,7 +31,8 @@ class UserController
     public function createUser(): void
     {
         if ($_POST['btnAdd'] != null) {
-            require "app/views/new.php";
+            $url = "http://".$_SERVER["HTTP_HOST"]."/users/new";
+            echo $this->twig->render('additionForm.twig', ['addUser'=>$url]);
         }
         if ($_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
@@ -43,7 +51,8 @@ class UserController
     public function newUser(): void
     {
         $this->user->addUsertoDB();
-        require "app/views/mainPage.php";
+        header('Location: http://' . $_SERVER["HTTP_HOST"]);
+        exit();
     }
 
     public function showAll(): void
