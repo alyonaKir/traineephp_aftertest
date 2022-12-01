@@ -57,7 +57,7 @@ class UserController
 
     public function showAll(): void
     {
-        require "app/views/showAll.php";
+        //require "app/views/showAll.php";
         if (isset($_GET['page'])) {
             $pageno = $_GET['page'];
         } else {
@@ -66,12 +66,22 @@ class UserController
         $size_page = 10;
         $offset = ($pageno - 1) * $size_page;
         $arrUsers = $this->user->showAllUsersFromDB();
-        showAll($arrUsers, $pageno, $offset, $this->user->getNumberPages());
-
-        if ($_GET['btnMain'] != null) {
-            header('Location: http://' . $_SERVER["HTTP_HOST"]);
-            exit();
-        }
+        ini_set('display_startup_errors', 1);
+        ini_set('display_errors', 1);
+        error_reporting(-1);
+        //showAll($arrUsers, $pageno, $offset, $this->user->getNumberPages());
+        echo $this->twig->render('showAll.twig', [
+            'deleteChecked'=>'http://'.$_SERVER["HTTP_HOST"].'/users/deleteChecked',
+            'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],
+            'users' => $arrUsers,
+            'page' => $pageno,
+            'deleteUser' => 'http://'.$_SERVER["HTTP_HOST"].'/user/delete/',
+            'editUser'=> 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/'
+        ]);
+//        if ($_GET['btnMain'] != null) {
+//            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+//            exit();
+//        }
 
     }
 
@@ -122,6 +132,7 @@ class UserController
     public function delete(): void
     {
         $id = $this->getIdFromURL();
+        echo $id;
         $this->user->deleteUserFromDB($id);
 
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');

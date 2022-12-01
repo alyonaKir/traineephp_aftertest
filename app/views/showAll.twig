@@ -21,25 +21,25 @@
 
 {#     for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
 {#        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
-        {% for user in users%}
-        <div id="<?php echo $users[$i]->getId();?>">
+        {% for user in users %}
+        <div id="{{ user.getId() }}">
             <tr>
-                <td><input class="form-check-input w-50 checkbox" type="checkbox" name="users[]" value="<?php echo $users[$i]->getId();?>"></td>
-                <td><?php echo $users[$i]->getId(); ?></td>
-                <td><?php echo $users[$i]->getEmail(); ?></td>
-                <td><?php echo $users[$i]->getName(); ?></td>
-                <td><?php echo $users[$i]->getGender(); ?></td>
-                <td><?php echo $users[$i]->isActive() ? "yes" : "no"; ?></td>
+                <td><input class="form-check-input w-50 checkbox" type="checkbox" name="users[]" value="{{ user.getId() }}"></td>
+                <td>{{ user.getId() }}</td>
+                <td>{{ user.getEmail() }}</td>
+                <td>{{ user.getName() }}</td>
+                <td>{{ user.getGender() }}</td>
+                <td>{% if(user.isActive()==1) %} yes {% else %} no {% endif %}</td>
                 <td>
                     <form method="post"
-                          action="{{ deleteUser }}"
+                          action="{{deleteUser~user.getId()}}"
                     onsubmit="return deleletconfig()">
                     <button name="btnDel" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Delete
                         user
                     </button>
                     </form>
                     <form method="post"
-                          action="{{ editUser }}">
+                          action="{{editUser~user.getId()}}">
                     <button name="btnEdit" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Edit
                         user
                     </button>
@@ -47,15 +47,12 @@
                 </td>
             </tr>
         </div>
-        <?php
-        }
-
-        ?>
+        {% endfor %}
 
         </tbody>
     </table>
-    <a class="btn {% if page == 1 % } btn-secondary {% else %} btn-primary {% endif %}" href="?page=1"?>First</a>
-    <a class="btn if ($page <= 1) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php echo "?page=".($page-1); ?>">Prev</a>
+    <a class="btn " href="?page=1"?>First</a>
+    <a class="btn" href="<?php echo "?page=".($page-1); ?>">Prev</a>
     <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1);} ?>">Next</a>
     <a class="btn <?php if ($page == $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="?page=<?php echo $total_pages;?>">Last</a>
     </form>
