@@ -121,21 +121,19 @@ class DataBaseClass
      *
      * @return void
      */
-    public function showInfoDB(): array
+    public function showInfoDB($offset, $size_page): array
     {
         $users = array();
         $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
-        $sql = "SELECT * FROM $db_table";
-        //$sql = "SELECT * FROM $db_table ORDER BY `id` DESC LIMIT 5";
-//        $sql= mysql_query("select * from `products` ORDER BY `product_id` DESC LIMIT 5");
+        $sql = "SELECT * FROM $db_table ORDER BY `id` ASC LIMIT $offset, $size_page";
         $log = "";
         if ($result = $conn->query($sql)) {
-            $rowsCount = $result->num_rows;
             foreach ($result as $row) {
                 $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
                 $users[count($users) - 1]->setId($row['id']);
             }
+            //}
             $result->free();
         } else {
             $log = "Ошибка: " . $conn->error;

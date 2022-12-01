@@ -57,7 +57,6 @@ class UserController
 
     public function showAll(): void
     {
-        //require "app/views/showAll.php";
         if (isset($_GET['page'])) {
             $pageno = $_GET['page'];
         } else {
@@ -65,23 +64,22 @@ class UserController
         }
         $size_page = 10;
         $offset = ($pageno - 1) * $size_page;
-        $arrUsers = $this->user->showAllUsersFromDB();
-        ini_set('display_startup_errors', 1);
-        ini_set('display_errors', 1);
-        error_reporting(-1);
-        //showAll($arrUsers, $pageno, $offset, $this->user->getNumberPages());
+
+        $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
+
         echo $this->twig->render('showAll.twig', [
             'deleteChecked'=>'http://'.$_SERVER["HTTP_HOST"].'/users/deleteChecked',
             'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],
             'users' => $arrUsers,
             'page' => $pageno,
             'deleteUser' => 'http://'.$_SERVER["HTTP_HOST"].'/user/delete/',
-            'editUser'=> 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/'
+            'editUser'=> 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/',
+            'total_pages' => $this->user->getNumberPages()
         ]);
-//        if ($_GET['btnMain'] != null) {
-//            header('Location: http://' . $_SERVER["HTTP_HOST"]);
-//            exit();
-//        }
+        if ($_GET['btnMain'] != null) {
+            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+            exit();
+        }
 
     }
 
@@ -108,8 +106,10 @@ class UserController
         $id = $_POST['id'] ?? $this->getIdFromURL();
         if ($this->user->checkId($id)) {
             $user = $this->user->showUserByID($id);
-            require 'app/views/showByID.php';
-            show($user, $id);
+            echo $this->twig->render('showByID.twig', [
+                'user' => $user,
+                'editUserID' => 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/'.$id,
+            ]);
         } else {
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
             exit();

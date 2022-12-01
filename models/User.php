@@ -121,9 +121,9 @@ class User
         $this->db->addInfo($this);
     }
 
-    public function showAllUsersFromDB(): array
+    public function showAllUsersFromDB($offset, $size_page): array
     {
-        return $this->db->showInfoDB();
+        return $this->db->showInfoDB($offset, $size_page);
     }
 
     public function showUserByID($id): User
@@ -149,9 +149,9 @@ class User
     public function getNumberPages(): int
     {
         if ($this->db->getRowsNumber() % 10 != 0) {
-            return $this->db->getRowsNumber() / 10 + 1;
+            return (int)($this->db->getRowsNumber() / 10 + 1);
         } else {
-            return $this->db->getRowsNumber() / 10;
+            return (int)($this->db->getRowsNumber() / 10);
         }
 
     }

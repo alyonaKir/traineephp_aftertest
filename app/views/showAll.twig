@@ -19,8 +19,6 @@
 
         <input id="select_all" type="checkbox"> Select All
 
-{#     for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
-{#        for($i = $offset; $i < (min($offset + 10, count($users))); $i++){#}
         {% for user in users %}
         <div id="{{ user.getId() }}">
             <tr>
@@ -51,10 +49,10 @@
 
         </tbody>
     </table>
-    <a class="btn " href="?page=1"?>First</a>
-    <a class="btn" href="<?php echo "?page=".($page-1); ?>">Prev</a>
-    <a class="btn btn-primary <?php if ($page >= $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="<?php if ($page >= $total_pages) {echo '#';} else {echo "?page=" . ($page + 1);} ?>">Next</a>
-    <a class="btn <?php if ($page == $total_pages) {echo 'btn-secondary';} else {echo 'btn-primary';} ?>" href="?page=<?php echo $total_pages;?>">Last</a>
+    <a class="btn {% if(page==1) %} btn-secondary {% else %} btn-primary {% endif %}" href="?page=1"?>First</a>
+    <a class="btn {% if(page<=1) %} btn-secondary {% else %} btn-primary {% endif %}" href="?page={{page-1 }}"?>Prev</a>
+    <a class="btn {% if (page >= total_pages)  %} btn-secondary{% else %} btn-primary {% endif %}" href="{%  if (page <= total_pages) %} ?page={{page+1}} {% endif %}">Next</a>
+    <a class="btn {% if(page==total_pages) %} btn-secondary {% else %} btn-primary {% endif %}" href="?page={{ total_pages }}">Last</a>
     </form>
     </body>
 {% endblock %}

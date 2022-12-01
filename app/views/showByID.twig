@@ -1,0 +1,28 @@
+{% extends 'index.twig' %}
+{% block main %}
+    <div class="nav w-50 p-10">
+        <form method="post" action="{{editUserID}}" onsubmit="return validateForm()" name="userForm">
+        <div class="form-floating">
+            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{ user.getEmail() }}">
+        </div>
+        <div class="form-floating">
+            <input name="name" type="text" class="form-control" id="floatingPassword" placeholder="Name" value="{{ user.getName() }}">
+        </div>
+
+        <div class="form-floating">
+            <select name="gender" class="form-select" aria-label="Default select example" >
+                <option value="male" {% if(user.getGender()=="male") %} selected {% endif %}>male</option>
+                <option value="female" {% if(user.getGender()=="female") %} selected {% endif %}>female</option>
+            </select>
+        </div>
+
+        <div class="form-floating">
+            <select name="status" class="form-select" aria-label="Default select example">
+                <option value="active" {% if(user.isActive()==1) %} selected {% endif %}>active</option>
+                <option value="inactive" {% if(user.isActive()==0) %} selected {% endif %}>inactive</option>
+            </select>
+        </div>
+        <button name="btnEditForm" class="w-100 btn btn-lg btn-primary" type="submit" value="btnClick">Edit user</button>
+        </form>
+    </div>
+{% endblock %}
