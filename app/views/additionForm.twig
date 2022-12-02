@@ -24,9 +24,8 @@
                 <option value="inactive">inactive</option>
             </select>
         </div>
-        <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user">Add user</button>
+        <button name="btnAdd" class="w-100 btn btn-lg btn-primary" type="submit" value="Add user" onclick="return validateForm()">Add user</button>
         </form>
         <a class="btn btn-primary w-100" href="{{ mainPage }}">Main Page</a>
-        <?php include 'back_button.php'?>
     </div>
 {% endblock %}

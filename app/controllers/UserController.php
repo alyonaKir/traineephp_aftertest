@@ -50,9 +50,15 @@ class UserController
 
     public function newUser(): void
     {
-        $this->user->addUsertoDB();
-        header('Location: http://' . $_SERVER["HTTP_HOST"]);
-        exit();
+        if($this->user->isUserExist()==0) {
+            $this->user->addUsertoDB();
+            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+            exit();
+        }
+        else{
+            header('http://'.$_SERVER["HTTP_HOST"].'/users/create');
+            exit();
+        }
     }
 
     public function showAll(): void

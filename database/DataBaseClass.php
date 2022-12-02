@@ -263,4 +263,26 @@ class DataBaseClass
         return $total_rows;
     }
 
+    public function isUserInDB($user) : bool{
+        $conn = $this->createConnection();
+        $db_table = $this->dbInfo['table'];
+        $userEmail = $conn->real_escape_string($user->getEmail());
+        $sql = "SELECT * FROM $db_table WHERE email = '$userEmail'";
+        $log = "";
+        if ($result = $conn->query($sql)) {
+            echo $result->num_rows;
+            if($result->num_rows == 0){
+                return false;
+            }
+            else{
+                return true;
+            }
+            $result->free();
+            $conn->close();
+        } else {
+            $conn->close();
+            return false;
+        }
+    }
+
 }

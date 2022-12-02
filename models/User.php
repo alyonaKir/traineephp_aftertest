@@ -153,7 +153,10 @@ class User
         } else {
             return (int)($this->db->getRowsNumber() / 10);
         }
+    }
 
+    public function isUserExist(): bool{
+        return $this->db->isUserInDB($this);
     }
 }
 
