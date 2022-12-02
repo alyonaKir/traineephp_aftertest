@@ -270,7 +270,6 @@ class DataBaseClass
         $sql = "SELECT * FROM $db_table WHERE email = '$userEmail'";
         $log = "";
         if ($result = $conn->query($sql)) {
-            echo $result->num_rows;
             if($result->num_rows == 0){
                 return false;
             }
@@ -281,8 +280,8 @@ class DataBaseClass
             $conn->close();
         } else {
             $conn->close();
-            return false;
         }
+        return false;
     }
 
 }
