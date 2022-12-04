@@ -284,4 +284,18 @@ class DataBaseClass
         return false;
     }
 
+    public function clearDB(){
+        $conn = $this->createConnection();
+        $db_table = $this->dbInfo['table'];
+        $sql = "DELETE FROM $db_table";
+        $log = "";
+        if ($conn->query($sql) === TRUE) {
+            $log = "DB cleared";
+        } else {
+            $log = "Error deleting record: " . $conn->error;
+        }
+        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        $conn->close();
+    }
+
 }

@@ -30,14 +30,11 @@ class UserController
 
     public function createUser(): void
     {
-        if ($_POST['btnAdd'] != null) {
-            $url = "http://".$_SERVER["HTTP_HOST"]."/users/new";
-            echo $this->twig->render('additionForm.twig', ['addUser'=>$url]);
-        }
-        if ($_GET['btnMain'] != null) {
-            header('Location: http://' . $_SERVER["HTTP_HOST"]);
-            exit();
-        }
+        $url = "http://".$_SERVER["HTTP_HOST"]."/users/new";
+        echo $this->twig->render('additionForm.twig', [
+            'addUser'=>$url,
+                'mainPage' => 'http://' . $_SERVER["HTTP_HOST"]]
+        );
     }
 
     private function test_input($data)
@@ -50,18 +47,12 @@ class UserController
 
     public function newUser(): void
     {
-        if($this->user->isUserExist()==0) {
-            echo "true";
-            $this->user->addUsertoDB();
-            header('Location: http://' . $_SERVER["HTTP_HOST"]);
+        if(!$this->user->isUserExist()==0) {
+            header('Location: http://' . $_SERVER["HTTP_HOST"].'/users/create');
             exit();
         }
-        else{
-            echo "else";
-            header('http://'.$_SERVER["HTTP_HOST"].'/users/create');
-            //exit();
-        }
-        //header('Location: http://' . $_SERVER["HTTP_HOST"]);
+        $this->user->addUsertoDB();
+        header('Location: http://' . $_SERVER["HTTP_HOST"]);
         exit();
     }
 
@@ -84,7 +75,7 @@ class UserController
             'page' => $pageno,
             'deleteUser' => 'http://'.$_SERVER["HTTP_HOST"].'/user/delete/',
             'editUser'=> 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/',
-            'total_pages' => $this->user->getNumberPages()
+            'total_pages' => ($this->user->getNumberPages()==0)?1:($this->user->getNumberPages())
         ]);
         if ($_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
@@ -95,8 +86,13 @@ class UserController
 
     public function deleteChecked(){
         if($_POST['btnCheck']!=null && $_POST['users']!=null) {
-            for ($i = 0; $i < count($_POST['users']); $i++) {
-                $this->user->deleteUserFromDB($_POST['users'][$i]);
+            if(count($_POST['users'] )>=10){
+                $this->user->clearUsers();
+            }
+            else {
+                for ($i = 0; $i < count($_POST['users']); $i++) {
+                    $this->user->deleteUserFromDB($_POST['users'][$i]);
+                }
             }
         }
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');

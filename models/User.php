@@ -158,6 +158,10 @@ class User
     public function isUserExist(): bool{
         return $this->db->isUserInDB($this);
     }
+
+    public function clearUsers(){
+        $this->db->clearDB();
+    }
 }
 
 ?>
