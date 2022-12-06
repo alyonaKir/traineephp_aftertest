@@ -7,5 +7,15 @@
         <form method="post" action="{{ showForm }} ">
             <button name="btnShow" class="w-100 btn btn-primary" type="submit" value="btnClick">Show users</button>
         </form>
+
+        <form method="post" action="{{ mainPage }}">
+            <div class="form-floating">
+                <select name="database" class="form-select" aria-label="Default select example">
+                    <option value="db" {% if(db=="db") %} selected {% endif %}>Local database</option>
+                    <option value="rest_api" {% if(db=="rest_api") %} selected {% endif %}>Rest Api</option>
+                </select>
+            </div>
+            <button name="btnDB" class="w-100 btn btn-primary" type="submit" value="btnClick">Choose</button>
+        </form>
     </div>
 {% endblock %}

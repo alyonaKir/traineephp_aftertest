@@ -1,16 +1,10 @@
 $(document).ready(function(){
-    // if(localStorage.getItem('flag')){
-    //     $('#select_all').prop('checked',true);
-    // }
-
     $('#select_all').on('click',function(){
         if(this.checked){
             $('.checkbox').each(function(){
-                localStorage.setItem('flag', true);
                 this.checked = true;
             });
         }else{
-            localStorage.setItem('flag', false);
             $('.checkbox').each(function(){
                 this.checked = false;
             });

@@ -4,6 +4,7 @@ namespace Models;
 include 'vendor/autoload.php';
 
 use DataBase\DataBaseClass;
+use DataBase\RestDBClass;
 
 class User
 {
@@ -12,6 +13,7 @@ class User
     private string $name;
     private string $gender;
     private bool $active;
+    static string $dbType;
 
     private DataBaseClass $db;
 
@@ -28,6 +30,11 @@ class User
         $this->gender = $gender;
         $this->active = $active;
         $this->db = DataBaseClass::getInstance();
+//        if(self::$dbType=="db") {
+//            $this->db = DataBaseClass::getInstance();}
+//        }else{
+//            $this->db = new RestDBClass();
+//        }
     }
 
     public function __toString(): string

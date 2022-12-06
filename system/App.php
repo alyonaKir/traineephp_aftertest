@@ -14,6 +14,7 @@ class  App
         //include 'database/testDB.php';
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
+        $router->post("",[new AppController(), 'index']);
         $router->post("/users", [new UserController(), 'showAll']);
         $router->get("/users", [new UserController(), 'showAll']);
         $router->post("/user/[0-9]+", [new UserController(), 'showByID']);
@@ -26,6 +27,7 @@ class  App
         $router->post("/users/create", [new UserController(), 'createUser']);
         $router->get("/users/create", [new UserController(), 'createUser']);
         $router->post("/users/deleteChecked", [new UserController(), 'deleteChecked']);
+//        $router->post("/users/choose", [new AppController(), 'chooseDB']);
         $router->run();
     }
 }
