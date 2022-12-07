@@ -162,10 +162,15 @@ class User
 
     public function getNumberPages(): int
     {
-        if ($this->db->getRowsNumber() % 10 != 0) {
-            return (int)($this->db->getRowsNumber() / 10 + 1);
-        } else {
-            return (int)($this->db->getRowsNumber() / 10);
+        if ($this->dbType == "db") {
+            if ($this->db->getRowsNumber() % 10 != 0) {
+                return (int)($this->db->getRowsNumber() / 10 + 1);
+            } else {
+                return (int)($this->db->getRowsNumber() / 10);
+            }
+        }
+        else{
+            return 54;
         }
     }
 
