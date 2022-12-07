@@ -157,7 +157,12 @@ class User
 
     public function checkId($id)
     {
+        if ($this->dbType == "db") {
         return $this->db->checkIdInDB($id);
+        }
+        else{
+            return true;
+        }
     }
 
     public function getNumberPages(): int

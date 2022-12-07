@@ -70,10 +70,7 @@ class UserController
         $offset = ($pageno - 1) * $size_page;
 
         $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
-        //ini_set ('display_errors', 'on');
-//        ini_set ('log_errors', 'on');
-//        ini_set ('display_startup_errors', 'on');
-//        ini_set ('error_reporting', E_ALL);
+
         echo $this->twig->render('showAll.twig', [
             'deleteChecked'=>'http://'.$_SERVER["HTTP_HOST"].'/users/deleteChecked',
             'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],
