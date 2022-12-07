@@ -10,6 +10,10 @@ class  App
 {
     public function run() : void
     {
+//        ini_set ('display_errors', 'on');
+//        ini_set ('log_errors', 'on');
+//        ini_set ('display_startup_errors', 'on');
+//        ini_set ('error_reporting', E_ALL);
         DataBaseClass::checkDB();
         //include 'database/testDB.php';
         $router = new Router();

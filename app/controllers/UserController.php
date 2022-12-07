@@ -14,17 +14,20 @@ class UserController
 
     public function __construct()
     {
+        if(isset($_SESSION['dbType']))
+        $dbType = $_SESSION['dbType'];
+        else
+            $dbType = "db";
         $this->loader = new FilesystemLoader(__DIR__.'/../views');
         $this->twig = new Environment($this->loader);
-
         if ($_POST['email'] != null) {
             $email = $this->test_input($_POST["email"]);
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
-            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0);
+            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $dbType);
         } else {
-            $this->user = new User('', '', '', 1);
+            $this->user = new User('', '', '', 1, $dbType);
         }
     }
 
@@ -67,7 +70,10 @@ class UserController
         $offset = ($pageno - 1) * $size_page;
 
         $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
-
+        //ini_set ('display_errors', 'on');
+//        ini_set ('log_errors', 'on');
+//        ini_set ('display_startup_errors', 'on');
+//        ini_set ('error_reporting', E_ALL);
         echo $this->twig->render('showAll.twig', [
             'deleteChecked'=>'http://'.$_SERVER["HTTP_HOST"].'/users/deleteChecked',
             'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],

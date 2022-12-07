@@ -130,7 +130,7 @@ class DataBaseClass
         $log = "";
         if ($result = $conn->query($sql)) {
             foreach ($result as $row) {
-                $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+                $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"], "db");
                 $users[count($users) - 1]->setId($row['id']);
             }
             //}
@@ -178,7 +178,7 @@ class DataBaseClass
         $log = "";
         if ($result = $conn->query($sql)) {
             foreach ($result as $row) {
-                $user = new User($row["email"], $row["name"], $row["gender"], $row["active"]);
+                $user = new User($row["email"], $row["name"], $row["gender"], $row["active"], "db");
             }
             $result->free();
         } else {

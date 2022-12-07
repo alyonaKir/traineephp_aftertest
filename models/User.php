@@ -13,9 +13,11 @@ class User
     private string $name;
     private string $gender;
     private bool $active;
-    static string $dbType;
+
+    private string $dbType;
 
     private DataBaseClass $db;
+    private RestDBClass $rest;
 
     /**
      * @param string $email
@@ -23,18 +25,15 @@ class User
      * @param string $gender
      * @param bool $active
      */
-    public function __construct(string $email, string $name, string $gender, bool $active)
+    public function __construct(string $email, string $name, string $gender, bool $active, $dbType)
     {
         $this->email = $email;
         $this->name = $name;
         $this->gender = $gender;
         $this->active = $active;
+        $this->dbType = $dbType;
         $this->db = DataBaseClass::getInstance();
-//        if(self::$dbType=="db") {
-//            $this->db = DataBaseClass::getInstance();}
-//        }else{
-//            $this->db = new RestDBClass();
-//        }
+        $this->rest = new RestDBClass();
     }
 
     public function __toString(): string
@@ -130,12 +129,20 @@ class User
 
     public function showAllUsersFromDB($offset, $size_page): array
     {
-        return $this->db->showInfoDB($offset, $size_page);
+        if ($this->dbType == "db") {
+            return $this->db->showInfoDB($offset, $size_page);
+        } else {
+            return $this->rest->showAllUsers($offset, $size_page);
+        }
     }
 
     public function showUserByID($id): User
     {
-        return $this->db->showByID($id);
+        if ($this->dbType == "db") {
+            return $this->db->showByID($id);
+        } else {
+            return $this->rest->getUserById($id);
+        }
     }
 
     public function deleteUserFromDB($id): void
@@ -162,11 +169,13 @@ class User
         }
     }
 
-    public function isUserExist(): bool{
+    public function isUserExist(): bool
+    {
         return $this->db->isUserInDB($this);
     }
 
-    public function clearUsers(){
+    public function clearUsers()
+    {
         $this->db->clearDB();
     }
 }
