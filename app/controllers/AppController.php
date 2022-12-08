@@ -5,11 +5,13 @@ use Models\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+include 'system/curl.php';
 session_start();
 class AppController
 {
     public function index(): void
     {
+        ini_set ('display_errors', 'on');
         if(isset($_POST['database'])) {
             $_SESSION['dbType'] = $_POST['database'];
         }
@@ -24,7 +26,6 @@ class AppController
             'mainPage'=> "http://".$_SERVER["HTTP_HOST"],
             'db'=>$_SESSION['dbType']
         ]);
-
     }
 }
 ?>

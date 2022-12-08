@@ -147,7 +147,11 @@ class User
 
     public function deleteUserFromDB($id): void
     {
-        $this->db->deleteUser($id);
+        if ($this->dbType == "db") {
+            $this->db->deleteUser($id);
+        }else{
+            $this->rest->deleteUserById($id);
+        }
     }
 
     public function editUserInfoInDB($user): void

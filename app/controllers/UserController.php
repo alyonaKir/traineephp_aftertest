@@ -11,31 +11,32 @@ class UserController
     private User $user;
     private $loader;
     private $twig;
+    private String $dbType;
 
     public function __construct()
     {
-        if(isset($_SESSION['dbType']))
-        $dbType = $_SESSION['dbType'];
+        if (isset($_SESSION['dbType']))
+            $this->dbType = $_SESSION['dbType'];
         else
             $dbType = "db";
-        $this->loader = new FilesystemLoader(__DIR__.'/../views');
+        $this->loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($this->loader);
         if ($_POST['email'] != null) {
             $email = $this->test_input($_POST["email"]);
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
-            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $dbType);
+            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $this->dbType);
         } else {
-            $this->user = new User('', '', '', 1, $dbType);
+            $this->user = new User('', '', '', 1, $this->dbType);
         }
     }
 
     public function createUser(): void
     {
-        $url = "http://".$_SERVER["HTTP_HOST"]."/users/new";
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/users/new";
         echo $this->twig->render('additionForm.twig', [
-            'addUser'=>$url,
+                'addUser' => $url,
                 'mainPage' => 'http://' . $_SERVER["HTTP_HOST"]]
         );
     }
@@ -50,8 +51,8 @@ class UserController
 
     public function newUser(): void
     {
-        if(!$this->user->isUserExist()==0) {
-            header('Location: http://' . $_SERVER["HTTP_HOST"].'/users/create');
+        if (!$this->user->isUserExist() == 0) {
+            header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users/create');
             exit();
         }
         $this->user->addUsertoDB();
@@ -71,14 +72,17 @@ class UserController
 
         $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
 
+        $delUrl = 'http://' . $_SERVER["HTTP_HOST"] . '/user/delete/';
+        //$id=2891;
+
         echo $this->twig->render('showAll.twig', [
-            'deleteChecked'=>'http://'.$_SERVER["HTTP_HOST"].'/users/deleteChecked',
+            'deleteChecked' => 'http://' . $_SERVER["HTTP_HOST"] . '/users/deleteChecked',
             'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],
             'users' => $arrUsers,
             'page' => $pageno,
-            'deleteUser' => 'http://'.$_SERVER["HTTP_HOST"].'/user/delete/',
-            'editUser'=> 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/',
-            'total_pages' => ($this->user->getNumberPages()==0)?1:($this->user->getNumberPages())
+            'deleteUser' => $delUrl,
+            'editUser' => 'http://' . $_SERVER["HTTP_HOST"] . '/user/edit/',
+            'total_pages' => ($this->user->getNumberPages() == 0) ? 1 : ($this->user->getNumberPages()),
         ]);
         if ($_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
@@ -87,12 +91,12 @@ class UserController
 
     }
 
-    public function deleteChecked(){
-        if($_POST['btnCheck']!=null && $_POST['users']!=null) {
-            if(count($_POST['users'] )>=10){
+    public function deleteChecked()
+    {
+        if ($_POST['btnCheck'] != null && $_POST['users'] != null) {
+            if (count($_POST['users']) >= 10) {
                 $this->user->clearUsers();
-            }
-            else {
+            } else {
                 for ($i = 0; $i < count($_POST['users']); $i++) {
                     $this->user->deleteUserFromDB($_POST['users'][$i]);
                 }
@@ -101,6 +105,7 @@ class UserController
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
         exit();
     }
+
     private function getIdFromURL(): int
     {
         $url = $_SERVER['REQUEST_URI'];
@@ -117,7 +122,7 @@ class UserController
             $user = $this->user->showUserByID($id);
             echo $this->twig->render('showByID.twig', [
                 'user' => $user,
-                'editUserID' => 'http://'.$_SERVER["HTTP_HOST"].'/user/edit/'.$id,
+                'editUserID' => 'http://' . $_SERVER["HTTP_HOST"] . '/user/edit/' . $id,
             ]);
         } else {
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
@@ -141,9 +146,7 @@ class UserController
     public function delete(): void
     {
         $id = $this->getIdFromURL();
-        echo $id;
         $this->user->deleteUserFromDB($id);
-
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
         exit();
     }
