@@ -51,7 +51,7 @@ class UserController
 
     public function newUser(): void
     {
-        if (!$this->user->isUserExist() == 0) {
+        if (!$this->user->isUserExist() == 0 && $_SESSION['dbType']=="db") {
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users/create');
             exit();
         }

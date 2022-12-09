@@ -56,7 +56,6 @@ class RestDBClass
         $headers[] = 'Content-Type: application/json';
         $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
         $data = array(
-            "id" => $user->getId(),
             "email" => $user->getEmail(),
             "name" => $user->getName(),
             "gender" => $user->getGender(),
@@ -64,7 +63,28 @@ class RestDBClass
         );
         $ch = curl_init('https://gorest.co.in/public/v2/users/'.$user->getId());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_exec($ch);
+        curl_close($ch);
+    }
+
+    public function addUser(User $user)
+    {
+        $headers = array();
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
+        $data = array(
+            "email" => $user->getEmail(),
+            "name" => $user->getName(),
+            "gender" => $user->getGender(),
+            "status" => $user->isActive()
+        );
+        $ch = curl_init('https://gorest.co.in/public/v2/users/');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_exec($ch);
