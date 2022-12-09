@@ -11,12 +11,12 @@ class UserController
     private User $user;
     private $loader;
     private $twig;
-    private String $dbType;
+    //private String $dbType;
 
     public function __construct()
     {
         if (isset($_SESSION['dbType']))
-            $this->dbType = $_SESSION['dbType'];
+            $dbType = $_SESSION['dbType'];
         else
             $dbType = "db";
         $this->loader = new FilesystemLoader(__DIR__ . '/../views');
@@ -26,9 +26,9 @@ class UserController
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
             $status = $this->test_input($_POST["status"]);
-            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $this->dbType);
+            $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $dbType);
         } else {
-            $this->user = new User('', '', '', 1, $this->dbType);
+            $this->user = new User('', '', '', 1, $dbType);
         }
     }
 
