@@ -51,20 +51,20 @@ class RestDBClass
 
     public function editUserById(User $user)
     {
+        ini_set ('display_errors', 'on');
         $headers = array();
         $headers[] = 'Accept: application/json';
         $headers[] = 'Content-Type: application/json';
-        $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
+        $headers[] = 'Authorization: Bearer 3ed62aaac5b04a7c41a8003628aded79288ebd8ea58eaf42dbc5323b9aba57be';
         $data = array(
-            "email" => $user->getEmail(),
             "name" => $user->getName(),
-            "gender" => $user->getGender(),
-            "status" => $user->isActive()
+            "email" => $user->getEmail(),
+            "status" => $user->isActive()?"active":"inactive"
         );
         $ch = curl_init('https://gorest.co.in/public/v2/users/'.$user->getId());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_exec($ch);
         curl_close($ch);
@@ -77,15 +77,15 @@ class RestDBClass
         $headers[] = 'Content-Type: application/json';
         $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
         $data = array(
-            "email" => $user->getEmail(),
             "name" => $user->getName(),
             "gender" => $user->getGender(),
-            "status" => $user->isActive()
+            "email" => $user->getEmail(),
+            "status" => $user->isActive()?"active":"inactive"
         );
-        $ch = curl_init('https://gorest.co.in/public/v2/users/');
+        $ch = curl_init('https://gorest.co.in/public/v2/users');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_exec($ch);
         curl_close($ch);

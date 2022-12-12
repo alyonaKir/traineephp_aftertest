@@ -11,11 +11,11 @@ class AppController
 {
     public function index(): void
     {
-        ini_set ('display_errors', 'on');
+//        ini_set ('display_errors', 'on');
         if(isset($_POST['database'])) {
             $_SESSION['dbType'] = $_POST['database'];
         }
-        else {
+        else if(!isset($_SESSION['dbType'])) {
             $_SESSION['dbType'] = "db";
         }
         $loader = new FilesystemLoader(__DIR__.'/../views');

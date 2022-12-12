@@ -138,6 +138,7 @@ class UserController
             $id = $this->getIdFromURL();
             $this->user->setId($id);
             $this->user->editUserInfoInDB($this->user);
+            echo "before header";
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
             exit();
         }

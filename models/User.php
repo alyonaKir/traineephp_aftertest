@@ -124,10 +124,12 @@ class User
 
     public function addUsertoDB(): void
     {
-        if ($this->dbType == "db")
-        $this->db->addInfo($this);
-        else
-        $this->rest->addUser($this);
+        if ($this->dbType == "db") {
+            $this->db->addInfo($this);
+        }
+        else {
+            $this->rest->addUser($this);
+        }
     }
 
     public function showAllUsersFromDB($offset, $size_page): array
@@ -159,10 +161,13 @@ class User
 
     public function editUserInfoInDB($user): void
     {
-        if ($this->dbType == "db")
+        if ($this->dbType == "db"){
         $this->db->editUser($user);
-        else
+        }
+        else{
+            echo "user model";
             $this->rest->editUserById($user);
+        }
     }
 
     public function checkId($id)
