@@ -27,7 +27,7 @@ class RestDBClass
         $users = array();
         $allData = file_get_contents("https://gorest.co.in//public/v2/users?page=".($offset+1)."&per_page=".$size_page);
         $jsonArray = json_decode($allData, true);
-        for($i=0; $i<count($jsonArray); $i++) {
+        for($i=0; $i < count($jsonArray); $i++) {
             $users[] = new User($jsonArray[$i]["email"], $jsonArray[$i]["name"], $jsonArray[$i]["gender"], $jsonArray[$i]["status"], "rest_api");
             $users[count($users) - 1]->setId($jsonArray[$i]['id']);
         }
@@ -61,16 +61,16 @@ class RestDBClass
             "email" => $user->getEmail(),
             "status" => $user->isActive()?"active":"inactive"
         );
-        $ch = curl_init('https://gorest.co.in/public/v2/users/'.$user->getId());
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_exec($ch);
-        curl_close($ch);
+        $curl = curl_init('https://gorest.co.in/public/v2/users/'.$user->getId());
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_exec($curl);
+        curl_close($curl);
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user): void
     {
         $headers = array();
         $headers[] = 'Accept: application/json';
@@ -82,13 +82,13 @@ class RestDBClass
             "email" => $user->getEmail(),
             "status" => $user->isActive()?"active":"inactive"
         );
-        $ch = curl_init('https://gorest.co.in/public/v2/users');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_exec($ch);
-        curl_close($ch);
+        $ch1 = curl_init('https://gorest.co.in/public/v2/users');
+        curl_setopt($ch1, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch1, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch1, CURLOPT_HTTPHEADER, $headers);
+        curl_exec($ch1);
+        curl_close($ch1);
     }
 
 }

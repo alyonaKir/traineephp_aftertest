@@ -59,9 +59,9 @@ class UserController
         header('Location: http://' . $_SERVER["HTTP_HOST"]);
         exit();
     }
-
     public function showAll(): void
     {
+        ini_set ('display_errors', 'on');
         if (isset($_GET['page'])) {
             $pageno = $_GET['page'];
         } else {
@@ -69,7 +69,6 @@ class UserController
         }
         $size_page = 10;
         $offset = ($pageno - 1) * $size_page;
-
         $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
 
         $delUrl = 'http://' . $_SERVER["HTTP_HOST"] . '/user/delete/';
@@ -88,7 +87,6 @@ class UserController
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
             exit();
         }
-
     }
 
     public function deleteChecked()
