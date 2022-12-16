@@ -49,26 +49,32 @@ class RestDBClass
         curl_close($ch);
     }
 
-    public function editUserById(User $user)
+    public function editUserById(User $user):void
     {
-        ini_set ('display_errors', 'on');
+        $data = array(
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'status' =>"active"
+        );
+        $data_json =  json_encode($data);
         $headers = array();
         $headers[] = 'Accept: application/json';
         $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Content-Length: ' . strlen($data_json);
         $headers[] = 'Authorization: Bearer 3ed62aaac5b04a7c41a8003628aded79288ebd8ea58eaf42dbc5323b9aba57be';
-        $data = array(
-            "name" => $user->getName(),
-            "email" => $user->getEmail(),
-            "status" => $user->isActive()?"active":"inactive"
-        );
+
         $curl = curl_init('https://gorest.co.in/public/v2/users/'.$user->getId());
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_json);
+
         curl_exec($curl);
         curl_close($curl);
     }
+//
+//curl -i -H "Accept:application/json" -H "Content-Type:application/json" -H "Authorization: Bearer ACCESS-TOKEN"
+//-XPOST "https://gorest.co.in/public/v2/users" -d '{"name":"Tenali Ramakrishna", "gender":"male", "email":"tenali.ramakrishna@15ce.com", "status":"active"}'
 
     public function addUser(User $user): void
     {

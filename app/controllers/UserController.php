@@ -61,7 +61,7 @@ class UserController
     }
     public function showAll(): void
     {
-        ini_set ('display_errors', 'on');
+//        ini_set ('display_errors', 'on');
         if (isset($_GET['page'])) {
             $pageno = $_GET['page'];
         } else {
