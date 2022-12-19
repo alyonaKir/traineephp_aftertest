@@ -6,7 +6,7 @@ use Models\User;
 
 class RestDBClass
 {
-    //private $allData;
+    private $dataCount;
 
     public function __construct()
     {
@@ -22,11 +22,28 @@ class RestDBClass
         return $userObj;
     }
 
+    public function getSize(){
+        return $this->dataCount;
+    }
+
     public function showAllUsers($offset, $size_page): array
     {
         $users = array();
-        $allData = file_get_contents("https://gorest.co.in//public/v2/users?page=".($offset+1)."&per_page=".$size_page);
+
+        $headers = array();
+        $headers[] = 'Accept: application/json';
+        $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
+
+        $ch = curl_init('https://gorest.co.in/public/v2/users');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $allData = curl_exec($ch);
+        curl_close($ch);
+
         $jsonArray = json_decode($allData, true);
+        $this->dataCount = count($jsonArray);
         for($i=0; $i < count($jsonArray); $i++) {
             $users[] = new User($jsonArray[$i]["email"], $jsonArray[$i]["name"], $jsonArray[$i]["gender"], $jsonArray[$i]["status"], "rest_api");
             $users[count($users) - 1]->setId($jsonArray[$i]['id']);
@@ -72,9 +89,6 @@ class RestDBClass
         curl_exec($curl);
         curl_close($curl);
     }
-//
-//curl -i -H "Accept:application/json" -H "Content-Type:application/json" -H "Authorization: Bearer ACCESS-TOKEN"
-//-XPOST "https://gorest.co.in/public/v2/users" -d '{"name":"Tenali Ramakrishna", "gender":"male", "email":"tenali.ramakrishna@15ce.com", "status":"active"}'
 
     public function addUser(User $user): void
     {

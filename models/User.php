@@ -190,7 +190,7 @@ class User
             }
         }
         else{
-            return 54;
+            return $this->rest->getSize()/10;
         }
     }
 
