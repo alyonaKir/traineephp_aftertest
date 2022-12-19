@@ -16,3 +16,11 @@ services:
     volumes:
       - ./www/task/:/var/www/task/
 
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mynewpassword
+      MYSQL_DATABASE: Users
+    ports:
+      - 3308-3306
