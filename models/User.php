@@ -189,9 +189,7 @@ class User
                 return (int)($this->db->getRowsNumber() / 10);
             }
         }
-        else{
-            return $this->rest->getSize()/10;
-        }
+        return 592;
     }
 
     public function isUserExist(): bool

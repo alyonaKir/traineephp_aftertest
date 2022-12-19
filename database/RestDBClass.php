@@ -22,11 +22,8 @@ class RestDBClass
         return $userObj;
     }
 
-    public function getSize(){
-        return $this->dataCount;
-    }
 
-    public function showAllUsers($offset, $size_page): array
+    public function showAllUsers($pageno, $size_page): array
     {
         $users = array();
 
@@ -35,15 +32,16 @@ class RestDBClass
         $headers[] = 'Content-Type: application/json';
         $headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
 
-        $ch = curl_init('https://gorest.co.in/public/v2/users');
+
+        $ch = curl_init('https://gorest.co.in/public/v2/users?page='.$pageno.'&per_page='.$size_page);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $allData = curl_exec($ch);
         curl_close($ch);
-
         $jsonArray = json_decode($allData, true);
-        $this->dataCount = count($jsonArray);
+
+        echo count($jsonArray);
         for($i=0; $i < count($jsonArray); $i++) {
             $users[] = new User($jsonArray[$i]["email"], $jsonArray[$i]["name"], $jsonArray[$i]["gender"], $jsonArray[$i]["status"], "rest_api");
             $users[count($users) - 1]->setId($jsonArray[$i]['id']);

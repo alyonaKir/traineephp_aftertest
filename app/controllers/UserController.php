@@ -69,7 +69,12 @@ class UserController
         }
         $size_page = 10;
         $offset = ($pageno - 1) * $size_page;
-        $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
+        if($_SESSION['dbType']=="db"){
+            $arrUsers = $this->user->showAllUsersFromDB($offset, $size_page);
+        }
+        else {
+            $arrUsers = $this->user->showAllUsersFromDB($pageno, $size_page);
+        }
 
         $delUrl = 'http://' . $_SERVER["HTTP_HOST"] . '/user/delete/';
         //$id=2891;
