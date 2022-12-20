@@ -1,12 +1,12 @@
 version: '3.2'
 services:
   nginx:
-    build: ./nginx
+    build: ./nginx/
     container_name: nginx-container
     ports:
-      - 80:8080
+      - 80:80
     volumes:
-      - ./www/task/:/var/www/task/
+      - .:/var/www/task
 
   php:
     image: php:8.1-fpm
@@ -14,13 +14,13 @@ services:
     expose:
       - 9000
     volumes:
-      - ./www/task/:/var/www/task/
+      - .:/var/www/task/
 
-  db:
+  mysql:
     image: mysql:5.7
-    restart: always
+    container_name: mysql-container
+    volumes:
+      - mysql-data
     environment:
       MYSQL_ROOT_PASSWORD: mynewpassword
       MYSQL_DATABASE: Users
-    ports:
-      - 3308-3306

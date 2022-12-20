@@ -125,7 +125,7 @@ class User
     public function addUsertoDB(): void
     {
         if ($this->dbType == "db") {
-            $this->db->addInfo($this);
+            //$this->db->addInfo($this);
         }
         else {
             $this->rest->addUser($this);
@@ -194,6 +194,7 @@ class User
 
     public function isUserExist(): bool
     {
+
         return $this->db->isUserInDB($this);
     }
 
