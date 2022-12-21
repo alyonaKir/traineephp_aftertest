@@ -21,7 +21,7 @@ class UserController
             $dbType = "db";
         $this->loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($this->loader);
-        if ($_POST['email'] != null) {
+        if (isset($_POST['email']) && $_POST['email'] != null) {
             $email = $this->test_input($_POST["email"]);
             $name = $this->test_input($_POST["name"]);
             $gender = $this->test_input($_POST["gender"]);
