@@ -5,7 +5,6 @@ use Models\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-include 'system/curl.php';
 session_start();
 class AppController
 {

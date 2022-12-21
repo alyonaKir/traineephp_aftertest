@@ -16,7 +16,7 @@ class  App
 //        ini_set ('error_reporting', E_ALL);
 
 
-        DataBaseClass::checkDB();
+        //DataBaseClass::checkDB();
         //include 'database/testDB.php';
         $router = new Router();
         $router->get("",[new AppController(), 'index']);
