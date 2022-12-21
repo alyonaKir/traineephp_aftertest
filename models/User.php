@@ -32,7 +32,11 @@ class User
         $this->gender = $gender;
         $this->active = $active;
         $this->dbType = $dbType;
-        //$this->db = DataBaseClass::getInstance();
+        try {
+            $this->db = DataBaseClass::getInstance();
+        }
+        catch (\Exception $e){
+        }
         $this->rest = new RestDBClass();
     }
 
@@ -125,7 +129,7 @@ class User
     public function addUsertoDB(): void
     {
         if ($this->dbType == "db") {
-            //$this->db->addInfo($this);
+            $this->db->addInfo($this);
         }
         else {
             $this->rest->addUser($this);
@@ -135,8 +139,12 @@ class User
     public function showAllUsersFromDB($offset, $size_page): array
     {
         if ($this->dbType == "db") {
+            try {
+                return $this->db->showInfoDB($offset, $size_page);
+            }catch (\Exception $e){
+
+            }
             return array();
-            //return $this->db->showInfoDB($offset, $size_page);
         } else {
             return $this->rest->showAllUsers($offset, $size_page);
         }
@@ -145,8 +153,8 @@ class User
     public function showUserByID($id): User
     {
         if ($this->dbType == "db") {
-            return new User("", "", "", "", "db");
-            //return $this->db->showByID($id);
+            //return new User("", "", "", "", "db");
+            return $this->db->showByID($id);
         } else {
             return $this->rest->getUserById($id);
         }
@@ -155,7 +163,7 @@ class User
     public function deleteUserFromDB($id): void
     {
         if ($this->dbType == "db") {
-            //$this->db->deleteUser($id);
+            $this->db->deleteUser($id);
         }else{
             $this->rest->deleteUserById($id);
         }
@@ -164,7 +172,7 @@ class User
     public function editUserInfoInDB($user): void
     {
         if ($this->dbType == "db"){
-        //$this->db->editUser($user);
+            $this->db->editUser($user);
         }
         else{
             echo "user model";
@@ -175,7 +183,7 @@ class User
     public function checkId($id)
     {
         if ($this->dbType == "db") {
-        //return $this->db->checkIdInDB($id);
+        return $this->db->checkIdInDB($id);
         }
         else{
             return true;
@@ -185,25 +193,25 @@ class User
     public function getNumberPages(): int
     {
         if ($this->dbType == "db") {
-//            if ($this->db->getRowsNumber() % 10 != 0) {
-//                return (int)($this->db->getRowsNumber() / 10 + 1);
-//            } else {
-//                return (int)($this->db->getRowsNumber() / 10);
-//            }
-            return 0;
+            if ($this->db->getRowsNumber() % 10 != 0) {
+                return (int)($this->db->getRowsNumber() / 10 + 1);
+            } else {
+                return (int)($this->db->getRowsNumber() / 10);
+            }
+
         }
         return 592;
     }
 
     public function isUserExist(): bool
     {
-        return true;
-        //return $this->db->isUserInDB($this);
+        //return true;
+        return $this->db->isUserInDB($this);
     }
 
     public function clearUsers()
     {
-        //$this->db->clearDB();
+        $this->db->clearDB();
     }
 }
 
