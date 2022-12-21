@@ -88,7 +88,7 @@ class UserController
             'editUser' => 'http://' . $_SERVER["HTTP_HOST"] . '/user/edit/',
             'total_pages' => ($this->user->getNumberPages() == 0) ? 1 : ($this->user->getNumberPages()),
         ]);
-        if ($_GET['btnMain'] != null) {
+        if (isset($_GET['btnMain']) && $_GET['btnMain'] != null) {
             header('Location: http://' . $_SERVER["HTTP_HOST"]);
             exit();
         }
@@ -96,7 +96,7 @@ class UserController
 
     public function deleteChecked()
     {
-        if ($_POST['btnCheck'] != null && $_POST['users'] != null) {
+        if (isset($_POST['btnCheck']) && $_POST['btnCheck'] != null && $_POST['users'] != null) {
             if (count($_POST['users']) >= 10) {
                 $this->user->clearUsers();
             } else {
@@ -135,13 +135,12 @@ class UserController
 
     public function edit(): void
     {
-        if ($_POST['btnEdit'] != null) {
+        if (isset($_POST['btnEdit']) && $_POST['btnEdit'] != null) {
             $this->showByID();
         } else {
             $id = $this->getIdFromURL();
             $this->user->setId($id);
             $this->user->editUserInfoInDB($this->user);
-            echo "before header";
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
             exit();
         }
@@ -151,6 +150,7 @@ class UserController
     {
         $id = $this->getIdFromURL();
         $this->user->deleteUserFromDB($id);
+//        $this->showAll();
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
         exit();
     }
