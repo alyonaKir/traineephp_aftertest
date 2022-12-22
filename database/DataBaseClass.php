@@ -20,9 +20,11 @@ class DataBaseClass
         $this->dbInfo = require 'dbInfo.php';
         try {
             $this->db = new PDO('mysql:host=' . $this->dbInfo['host'] . ';dbname=' . $this->dbInfo['base'], $this->dbInfo['user'], $this->dbInfo['password']);
+
         }catch (\Exception $e){
             throw new \Exception("message ".$e);
         }
+        $this->createDB();
     }
 
     private function __clone(){}
@@ -74,7 +76,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/database/DB_log.txt', $log, 0);
     }
 
     private function createConnection()
@@ -83,9 +85,18 @@ class DataBaseClass
         if ($conn->connect_error) {
             die("Ошибка: " . $conn->connect_error);
         }
+        //$conn->query("CREATE DATABASE IF NOT EXISTS Users");
         return $conn;
     }
 
+    public function createDB():void{
+        $conn = new \mysqli($this->dbInfo['host'], $this->dbInfo['user'], $this->dbInfo['password'], $this->dbInfo['base']);
+        if ($conn->connect_error) {
+            die("Ошибка: " . $conn->connect_error);
+        }
+        $conn->query("CREATE DATABASE IF NOT EXISTS Users");
+        $conn->close();
+    }
     /**
      * added user into DataBase
      *
@@ -116,7 +127,7 @@ class DataBaseClass
         if ($result) {
             $log = 'We added information into database!';
         }
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
     }
 
 
@@ -143,7 +154,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
         return $users;
     }
 
@@ -164,7 +175,7 @@ class DataBaseClass
         } else {
             $log = "Error deleting record: " . $conn->error;
         }
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
         $conn->close();
     }
 
@@ -189,7 +200,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
         return $user;
     }
 
@@ -220,7 +231,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
     }
 
     /**
@@ -263,7 +274,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
         return $total_rows;
     }
 
@@ -298,7 +309,7 @@ class DataBaseClass
         } else {
             $log = "Error deleting record: " . $conn->error;
         }
-        file_put_contents(__DIR__ . 'DB_log.log', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
         $conn->close();
     }
 

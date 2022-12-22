@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   nginx:
-    build: nginx
+    build: docker/nginx
     container_name: nginx-container
     ports:
       - 80:80
@@ -10,15 +10,8 @@ services:
 
   php:
     image: php:8.1-fpm
-    build: php
+    build: docker/php
     container_name: php-container
-    environment:
-      - MYSQL_HOST=localhost
-      - MYSQL_DATABASE=Users
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=mynewpassword
-    depends_on:
-      - mysql
     expose:
       - 9000
     volumes:
@@ -27,11 +20,8 @@ services:
 
   mysql:
     image: mysql:5.7
-    build: sql
+    build: docker/sql
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: mynewpassword
-      MYSQL_HOST: localhost
-      MYSQL_DATABASE: Users
-      MYSQL_USER: root
 

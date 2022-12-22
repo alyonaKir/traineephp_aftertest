@@ -32,7 +32,7 @@ class User
         $this->gender = $gender;
         $this->active = $active;
         $this->dbType = $dbType;
-        //$this->db = DataBaseClass::getInstance();
+        $this->db = DataBaseClass::getInstance();
         $this->rest = RestDBClass::getInstance();
     }
 
@@ -200,8 +200,8 @@ class User
 
     public function isUserExist(): bool
     {
-        return true;
-        //return $this->db->isUserInDB($this);
+        //return true;
+        return $this->db->isUserInDB($this);
     }
 
     public function clearUsers()

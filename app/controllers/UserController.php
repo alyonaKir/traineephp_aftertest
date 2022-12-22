@@ -95,10 +95,10 @@ class UserController
         }
     }
 
-    public function deleteChecked():void
+    public function deleteChecked(): void
     {
         if (isset($_POST['btnCheck']) && $_POST['btnCheck'] != null && $_POST['users'] != null) {
-            if (count($_POST['users']) >= 10 && $_SESSION['dbType']=="db") {
+            if (count($_POST['users']) >= 10 && $_SESSION['dbType'] == "db") {
                 $this->user->clearUsers();
             } else {
                 for ($i = 0; $i < count($_POST['users']); $i++) {
@@ -131,22 +131,17 @@ class UserController
 
     public function edit(): void
     {
-//        if (isset($_POST['btnEdit']) && $_POST['btnEdit'] != null) {
-//            $this->showByID();
-//        } else {
-            $id = $this->getIdFromURL();
-            $this->user->setId($id);
-            $this->user->editUserInfoInDB($this->user);
-            header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
-            exit();
-        //}
+        $id = $this->getIdFromURL();
+        $this->user->setId($id);
+        $this->user->editUserInfoInDB($this->user);
+        header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
+        exit();
     }
 
     public function delete(): void
     {
         $id = $this->getIdFromURL();
         $this->user->deleteUserFromDB($id);
-//        $this->showAll();
         header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users');
         exit();
     }
