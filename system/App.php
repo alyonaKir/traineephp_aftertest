@@ -5,6 +5,7 @@ use App\controllers\AppController;
 use App\controllers\UserController;
 use Bootstrap\Router;
 use DataBase\DataBaseClass;
+use DataBase\RestDBClass;
 
 class  App
 {
@@ -14,7 +15,6 @@ class  App
 //        ini_set ('log_errors', 'on');
 //        ini_set ('display_startup_errors', 'on');
 //        ini_set ('error_reporting', E_ALL);
-
 
         //DataBaseClass::checkDB();
         //include 'database/testDB.php';

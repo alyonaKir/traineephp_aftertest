@@ -32,12 +32,8 @@ class User
         $this->gender = $gender;
         $this->active = $active;
         $this->dbType = $dbType;
-        try {
-            $this->db = DataBaseClass::getInstance();
-        }
-        catch (\Exception $e){
-        }
-        $this->rest = new RestDBClass();
+        //$this->db = DataBaseClass::getInstance();
+        $this->rest = RestDBClass::getInstance();
     }
 
     public function __toString(): string
@@ -175,7 +171,6 @@ class User
             $this->db->editUser($user);
         }
         else{
-            echo "user model";
             $this->rest->editUserById($user);
         }
     }
@@ -200,13 +195,13 @@ class User
             }
 
         }
-        return 592;
+        return $this->rest->countPages();
     }
 
     public function isUserExist(): bool
     {
-        //return true;
-        return $this->db->isUserInDB($this);
+        return true;
+        //return $this->db->isUserInDB($this);
     }
 
     public function clearUsers()

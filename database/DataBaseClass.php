@@ -18,7 +18,11 @@ class DataBaseClass
     private function __construct()
     {
         $this->dbInfo = require 'dbInfo.php';
-        $this->db = new PDO('mysql:host=' . $this->dbInfo['host'] . ';dbname=' . $this->dbInfo['base'], $this->dbInfo['user'], $this->dbInfo['password']);
+        try {
+            $this->db = new PDO('mysql:host=' . $this->dbInfo['host'] . ';dbname=' . $this->dbInfo['base'], $this->dbInfo['user'], $this->dbInfo['password']);
+        }catch (\Exception $e){
+            throw new \Exception("message ".$e);
+        }
     }
 
     private function __clone(){}

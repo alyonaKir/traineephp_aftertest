@@ -6,6 +6,7 @@ use Models\User;
 
 class RestDBClass
 {
+    private static $instance = null;
     private $dataCount;
     private $headers = array();
 
@@ -15,6 +16,17 @@ class RestDBClass
         $this->headers[] = 'Content-Type: application/json';
         $this->headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
     }
+
+    private function __clone(){}
+    public function __wakeup(){}
+
+    public static function getInstance() : RestDBClass{
+        if(self::$instance!=null){
+            return self::$instance;
+        }
+        return new self();
+    }
+
 
     public function getUserById($id) : User
     {
@@ -95,6 +107,16 @@ class RestDBClass
         curl_setopt($ch1, CURLOPT_HTTPHEADER, $this->headers);
         curl_exec($ch1);
         curl_close($ch1);
+    }
+
+    public function countPages():int{
+        $headers = get_headers('https://gorest.co.in/public/v2/users');
+        $str = $headers[17];
+        $count ="";
+        for ($i=20; $i<strlen($str); $i++){
+            $count.=$str[$i];
+        }
+        return $count;
     }
 
 }

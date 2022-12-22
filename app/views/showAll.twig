@@ -3,7 +3,7 @@
     <body>
 
 
-    <form method="post" action="{{ deleteChecked }}">
+    <form method="post" action="{{ deleteChecked }}" onsubmit="return deleletconfig()">
 
     <a class="btn btn-primary" href="{{ mainPage }}">Main Page</a>
     <button name="btnCheck" class="btn btn-primary" type="submit" value="btnClick">Delete checked</button>
@@ -33,20 +33,8 @@
                 <td>{{ user.getGender() }}</td>
                 <td>{% if(user.isActive()==1) %} yes {% else %} no {% endif %}</td>
                 <td>
-                    <form method="post"
-                          action="{{deleteUser~user.getId()}}"
-                          onsubmit="return deleletconfig()">
-                    <button name="btnDel" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Delete
-                        user
-                    </button>
-                    </form>
-
-                    <form method="post"
-                          action="{{editUser~user.getId()}}">
-                        <button name="btnEdit" class="w-50 btn btn-lg btn-primary" type="submit" value="btnClick">Edit
-                            user
-                        </button>
-                    </form>
+                    <a class="del w-50 btn btn-lg btn-primary" type="submit" href="{{deleteUser~user.getId()}}" onclick="deleletconfig()">Delete user</a>
+                    <a class="w-50 btn btn-lg btn-primary" type="submit" href="{{editUser~user.getId()}}">Edit user</a>
                 </td>
             </tr>
         </div>
