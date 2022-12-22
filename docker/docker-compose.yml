@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   nginx:
-    build: docker/nginx
+    build: nginx
     container_name: nginx-container
     ports:
       - 80:80
@@ -10,7 +10,7 @@ services:
 
   php:
     image: php:8.1-fpm
-    build: docker/php
+    build: php
     container_name: php-container
     expose:
       - 9000
@@ -20,7 +20,7 @@ services:
 
   mysql:
     image: mysql:5.7
-    build: docker/sql
+    build: sql
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: mynewpassword

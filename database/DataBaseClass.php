@@ -24,7 +24,6 @@ class DataBaseClass
         }catch (\Exception $e){
             throw new \Exception("message ".$e);
         }
-        $this->createDB();
     }
 
     private function __clone(){}
@@ -85,18 +84,11 @@ class DataBaseClass
         if ($conn->connect_error) {
             die("Ошибка: " . $conn->connect_error);
         }
-        //$conn->query("CREATE DATABASE IF NOT EXISTS Users");
+        $conn->query("CREATE DATABASE IF NOT EXISTS Users");
+
         return $conn;
     }
-
-    public function createDB():void{
-        $conn = new \mysqli($this->dbInfo['host'], $this->dbInfo['user'], $this->dbInfo['password'], $this->dbInfo['base']);
-        if ($conn->connect_error) {
-            die("Ошибка: " . $conn->connect_error);
-        }
-        $conn->query("CREATE DATABASE IF NOT EXISTS Users");
-        $conn->close();
-    }
+    
     /**
      * added user into DataBase
      *
