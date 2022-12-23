@@ -6,3 +6,4 @@ FROM php:8.1-fpm
 #RUN composer install --no-dev --no-interaction -o
 
 COPY --from=composer usr/bin/composer /usr/bin/composer
+RUN CHMOD -R 777 ./

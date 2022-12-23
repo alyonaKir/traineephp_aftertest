@@ -88,7 +88,7 @@ class DataBaseClass
 
         return $conn;
     }
-    
+
     /**
      * added user into DataBase
      *
@@ -113,7 +113,6 @@ class DataBaseClass
             $result = true;
         } catch (\PDOException $e) {
             $log = "Error: " . $e->getMessage() . "<br/>";
-            echo $log;
         }
 
         if ($result) {
