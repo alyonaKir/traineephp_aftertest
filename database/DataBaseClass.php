@@ -75,7 +75,7 @@ class DataBaseClass
             $log = "Ошибка: " . $conn->error;
         }
         $conn->close();
-        file_put_contents(__DIR__ . '/database/DB_log.txt', $log, 0);
+        file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
     }
 
     private function createConnection()

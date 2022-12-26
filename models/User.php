@@ -6,12 +6,56 @@ include 'vendor/autoload.php';
 use DataBase\DataBaseClass;
 use DataBase\RestDBClass;
 
-class User
+/**
+ * @OA\Schema(
+ *   schema="User"
+ * )
+ */
+class User implements IUser
 {
+    /**
+     * @OA\Property(
+     *     type="integer",
+     *     format="int64",
+     *     example=5444
+     * )
+     */
     private int $id;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="john@email.com"
+     * )
+     */
     private string $email;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="John"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     description="User gender",
+     *     example="male",
+     *     enum={"male", "female"}
+     * )
+     */
     private string $gender;
+
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     description="User status",
+     *     example="active",
+     *     enum={"active", "inactive"}
+     * )
+     */
     private bool $active;
 
     private string $dbType;
@@ -19,12 +63,7 @@ class User
     private DataBaseClass $db;
     private RestDBClass $rest;
 
-    /**
-     * @param string $email
-     * @param string $name
-     * @param string $gender
-     * @param bool $active
-     */
+
     public function __construct(string $email, string $name, string $gender, bool $active, $dbType)
     {
         $this->email = $email;
@@ -122,12 +161,11 @@ class User
         $this->active = $active;
     }
 
-    public function addUsertoDB(): void
+    public function addUserToDB(): void
     {
         if ($this->dbType == "db") {
             $this->db->addInfo($this);
-        }
-        else {
+        } else {
             $this->rest->addUser($this);
         }
     }
@@ -137,7 +175,7 @@ class User
         if ($this->dbType == "db") {
             try {
                 return $this->db->showInfoDB($offset, $size_page);
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
 
             }
             return array();
@@ -160,17 +198,16 @@ class User
     {
         if ($this->dbType == "db") {
             $this->db->deleteUser($id);
-        }else{
+        } else {
             $this->rest->deleteUserById($id);
         }
     }
 
     public function editUserInfoInDB($user): void
     {
-        if ($this->dbType == "db"){
+        if ($this->dbType == "db") {
             $this->db->editUser($user);
-        }
-        else{
+        } else {
             $this->rest->editUserById($user);
         }
     }
@@ -178,9 +215,8 @@ class User
     public function checkId($id)
     {
         if ($this->dbType == "db") {
-        return $this->db->checkIdInDB($id);
-        }
-        else{
+            return $this->db->checkIdInDB($id);
+        } else {
             return true;
         }
     }

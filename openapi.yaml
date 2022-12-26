@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: 'Test API'
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: 'Get all users'
+      description: 'returns all registered users'
+      operationId: ccfc417347fb3b22a8c1aa732448f663
+      parameters:
+        -
+          name: 'Page number'
+          in: query
+          description: 'number of page to return'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: 'Page size'
+          in: query
+          description: 'max number of users to return'
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'All the user'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'Message not found'
+    post:
+      tags:
+        - Users
+      summary: 'Add a new user'
+      description: 'Add a new user to the store'
+      operationId: a9b6bcd99f374fb9f7ffc2e269da6478
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'Invalid input'
+  '/users/{userId}':
+    get:
+      tags:
+        - Users
+      summary: 'Find user by ID'
+      description: 'Returns a single user'
+      operationId: e43e6376cda953afd9f85ae4e36067de
+      parameters:
+        -
+          name: userId
+          in: path
+          description: 'ID of user to return'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 'User by id'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+        - Users
+      summary: 'Updates a user with form data'
+      description: 'Updates a user'
+      operationId: a09f07ccf1f96234ba78372b8a34c4d0
+      parameters:
+        -
+          name: userId
+          in: path
+          description: 'ID of user that needs to be updated'
+          required: true
+          schema:
+            type: integer
+            format: int64
+        -
+          name: name
+          in: query
+          description: 'Name of user that needs to be updated'
+          schema:
+            type: string
+        -
+          name: email
+          in: query
+          description: 'Email of user that needs to be updated'
+          schema:
+            type: string
+        -
+          name: gender
+          in: query
+          description: 'Gender of user that needs to be updated'
+          schema:
+            type: string
+        -
+          name: status
+          in: query
+          description: 'Status of user that needs to be updated'
+          schema:
+            type: string
+      responses:
+        '405':
+          description: 'Invalid input'
+    delete:
+      tags:
+        - Users
+      summary: 'Delete a user by ID'
+      description: 'Deletes a user by ID'
+      operationId: 1cf963598151cc90c6e1f92cc4ad076c
+      parameters:
+        -
+          name: userId
+          in: path
+          description: 'ID of user to delete'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: 'Invalid user ID'
+components:
+  schemas:
+    User:
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5444
+        email:
+          type: string
+          example: john@email.com
+        name:
+          type: string
+          example: John
+        gender:
+          description: 'User gender'
+          type: string
+          enum:
+            - male
+            - female
+          example: male
+        active:
+          description: 'User status'
+          type: string
+          enum:
+            - active
+            - inactive
+          example: active
+      type: object

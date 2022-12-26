@@ -19,6 +19,8 @@
     "require": {
         "ext-pdo": "*",
         "ext-mysqli": "*",
-      "ext-curl": "*"
+        "ext-curl": "*",
+        "zircote/swagger-php": "^4.5",
+        "twig/twig": "^3.4"
     }
 }

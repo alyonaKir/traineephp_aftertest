@@ -4,6 +4,5 @@ FROM php:8.1-fpm
 #WORKDIR ./../task
 #COPY . ./
 #RUN composer install --no-dev --no-interaction -o
-
 COPY --from=composer usr/bin/composer /usr/bin/composer
-RUN CHMOD -R 777 ./
+RUN chmod -R 755 ./

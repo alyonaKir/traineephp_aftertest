@@ -2,17 +2,17 @@
 namespace App\controllers;
 include 'vendor/autoload.php';
 
+use JetBrains\PhpStorm\NoReturn;
 use Models\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+
 
 class UserController
 {
     private User $user;
     private $loader;
     private $twig;
-
-    //private String $dbType;
 
     public function __construct()
     {
@@ -56,7 +56,7 @@ class UserController
             header('Location: http://' . $_SERVER["HTTP_HOST"] . '/users/create');
             exit();
         }
-        $this->user->addUsertoDB();
+        $this->user->addUserToDB();
         header('Location: http://' . $_SERVER["HTTP_HOST"]);
         exit();
     }
