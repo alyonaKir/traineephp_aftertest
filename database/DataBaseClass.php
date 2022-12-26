@@ -4,12 +4,10 @@ namespace DataBase;
 include 'vendor/autoload.php';
 
 use Models\User;
-use PDO;
 
 class DataBaseClass
 {
     private static $instance = null;
-    private $db;
     private $dbInfo;
 
     /**
@@ -18,12 +16,6 @@ class DataBaseClass
     private function __construct()
     {
         $this->dbInfo = require 'dbInfo.php';
-        try {
-            $this->db = new PDO('mysql:host=' . $this->dbInfo['host'] . ';dbname=' . $this->dbInfo['base'], $this->dbInfo['user'], $this->dbInfo['password']);
-
-        }catch (\Exception $e){
-            throw new \Exception("message ".$e);
-        }
     }
 
     private function __clone(){}
@@ -97,27 +89,23 @@ class DataBaseClass
      */
     public function addInfo(User $user)
     {
-        $this->user = $user;
-        $email = $user->getEmail();
-        $name = $user->getName();
-        $gender = $user->getGender();
-        $status = $user->isActive() ? 1 : 0;
-        $log = "";
+        $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
-        try {
+        $log = "";
 
-            $this->db->exec("set names utf8");
-            $data = array('email' => $email, 'name' => $name, 'gender' => $gender, 'status' => $status);
-            $query = ($this->db)->prepare("INSERT INTO $db_table(email, name, gender, active) values(:email, :name, :gender, :status)");
-            $query->execute($data);
-            $result = true;
-        } catch (\PDOException $e) {
-            $log = "Error: " . $e->getMessage() . "<br/>";
-        }
+        $userEmail = $conn->real_escape_string($user->getEmail());
+        $userName = $conn->real_escape_string($user->getName());
+        $userGender = $conn->real_escape_string($user->getGender());
+        $userActive = $conn->real_escape_string($user->isActive()?1:0);
 
-        if ($result) {
-            $log = 'We added information into database!';
+        $sql = "INSERT INTO $db_table(email, name, gender, active) VALUES ('$userEmail','$userName', '$userGender', '$userActive')";
+
+        if ($result = $conn->query($sql)) {
+            $log = "Successfully edited";
+        } else {
+            $log = "Ошибка: " . $conn->error;
         }
+        $conn->close();
         file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
     }
 
