@@ -70,7 +70,7 @@ class DataBaseClass
         file_put_contents(__DIR__ . '/DB_log.txt', $log, 0);
     }
 
-    private function createConnection()
+    public function createConnection()
     {
         $conn = new \mysqli($this->dbInfo['host'], $this->dbInfo['user'], $this->dbInfo['password'], $this->dbInfo['base']);
         if ($conn->connect_error) {

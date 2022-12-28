@@ -33,6 +33,32 @@ class UserController
         }
     }
 
+    /**
+     * @return FilesystemLoader
+     */
+    public function getLoader(): FilesystemLoader
+    {
+        return $this->loader;
+    }
+
+    /**
+     * @return Environment
+     */
+    public function getTwig(): Environment
+    {
+        return $this->twig;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+
+
     public function createUser(): void
     {
         $url = "http://" . $_SERVER["HTTP_HOST"] . "/users/new";

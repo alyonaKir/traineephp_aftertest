@@ -8,7 +8,7 @@
 //];
 
 return [
-    "host" => "mysql",
+    "host" => "mysql-container",
     "user" => "root",
     "password" => "mynewpassword",
     "base" => "Users",

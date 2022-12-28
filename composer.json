@@ -10,6 +10,11 @@
             "System\\": "system/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Alyona Kirushcheva",

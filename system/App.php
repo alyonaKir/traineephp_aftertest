@@ -7,6 +7,8 @@ use Bootstrap\Router;
 use DataBase\DataBaseClass;
 use DataBase\RestDBClass;
 
+session_start();
+
 class  App
 {
     public function run() : void
