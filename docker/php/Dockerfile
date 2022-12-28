@@ -1,5 +1,3 @@
 FROM php:8.1-fpm
 COPY --from=composer usr/bin/composer /usr/bin/composer
-RUN apt-get install npm -y \
-    && npm init \
-    && npm install bootstrap
+RUN apt-get install npm -y
