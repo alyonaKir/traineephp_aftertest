@@ -7,6 +7,9 @@ use Models\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \DataBase\RestDBClass
+ */
 class RestTest extends TestCase
 {
     private RestDBClass $obj;
