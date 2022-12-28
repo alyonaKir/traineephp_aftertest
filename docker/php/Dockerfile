@@ -3,3 +3,5 @@ COPY --from=composer usr/bin/composer /usr/bin/composer
 RUN apt-get install npm -y \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
+#RUN pecl install xdebug \
+#    && docker-php-ext-enable xdebug

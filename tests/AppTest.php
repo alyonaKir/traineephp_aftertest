@@ -4,6 +4,9 @@ include 'vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \System\App
+ */
 class AppTest extends TestCase
 {
     /** @test */

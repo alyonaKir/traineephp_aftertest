@@ -1,0 +1,1 @@
+{"version":1,"defects":{"tests\\AppTest::isViewsExist":5},"times":{"tests\\AppTest::isViewsExist":0.001,"tests\\RestTest::testGetUserById":0.764,"tests\\RestTest::testEditUserById":0.413,"tests\\RestTest::testCountPage":0.597}}
