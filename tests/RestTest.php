@@ -7,9 +7,6 @@ use Models\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DataBase\RestDBClass
- */
 class RestTest extends TestCase
 {
     private RestDBClass $obj;
@@ -25,18 +22,27 @@ class RestTest extends TestCase
         $this->obj = RestDBClass::getInstance();
     }
 
+    /**
+     * @covers \DataBase\RestDBClass::getUserById
+     */
     public function testGetUserById()
     {
-        $result = $this->obj->getUserById(5200);
+        $result = $this->obj->getUserById(200);
         $this->assertInstanceOf(User::class, $result);
     }
 
+    /**
+     * @covers \DataBase\RestDBClass::editUserById
+     */
     public function testEditUserById()
     {
         $result = $this->obj->editUserById($this->user);
         $this->assertTrue($result);
     }
 
+    /**
+     * @covers \DataBase\RestDBClass::countPages
+     */
     public function testCountPage(){
         $result = $this->obj->countPages();
         $this->assertNotNull($result);

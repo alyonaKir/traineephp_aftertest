@@ -1,1 +1,1 @@
-{"version":1,"defects":{"tests\\AppTest::isViewsExist":5},"times":{"tests\\AppTest::isViewsExist":0.001,"tests\\RestTest::testGetUserById":0.764,"tests\\RestTest::testEditUserById":0.413,"tests\\RestTest::testCountPage":0.597}}
+{"version":1,"defects":{"tests\\AppTest::isViewsExist":5,"tests\\RestTest::testGetUserById":5,"tests\\RestTest::testEditUserById":5,"tests\\RestTest::testCountPage":5},"times":{"tests\\AppTest::isViewsExist":0.001,"tests\\RestTest::testGetUserById":0.337,"tests\\RestTest::testEditUserById":0.697,"tests\\RestTest::testCountPage":0.347}}
