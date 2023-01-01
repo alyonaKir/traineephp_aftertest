@@ -16,6 +16,9 @@ class RestTest extends TestCase
      */
     private MockObject $user;
 
+    /**
+     * @covers \DataBase\RestDBClass
+     */
     protected function setUp(): void
     {
         $this->user = $this->createMock(User::class);
@@ -23,16 +26,23 @@ class RestTest extends TestCase
     }
 
     /**
-     * @covers \DataBase\RestDBClass::getUserById
+     * @covers \DataBase\RestDBClass
+     */
+    public function testConstruct(){
+       $this->assertInstanceOf(RestDBClass::class, $this->obj);
+    }
+
+    /**
+     * @covers \DataBase\RestDBClass
      */
     public function testGetUserById()
     {
-        $result = $this->obj->getUserById(200);
+        $result = $this->obj->getUserById($this->obj->getLastUser());
         $this->assertInstanceOf(User::class, $result);
     }
 
     /**
-     * @covers \DataBase\RestDBClass::editUserById
+     * @covers \DataBase\RestDBClass
      */
     public function testEditUserById()
     {
@@ -41,7 +51,7 @@ class RestTest extends TestCase
     }
 
     /**
-     * @covers \DataBase\RestDBClass::countPages
+     * @covers \DataBase\RestDBClass
      */
     public function testCountPage(){
         $result = $this->obj->countPages();

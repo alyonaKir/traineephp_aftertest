@@ -8,6 +8,7 @@ class RestDBClass
 {
     private static $instance = null;
     private $dataCount;
+    private $lastUser;
     private $headers = array();
 
     public function __construct()
@@ -64,6 +65,7 @@ class RestDBClass
         for ($i = 0; $i < count($jsonArray); $i++) {
             $users[] = new User($jsonArray[$i]["email"], $jsonArray[$i]["name"], $jsonArray[$i]["gender"], $jsonArray[$i]["status"], "rest_api");
             $users[count($users) - 1]->setId($jsonArray[$i]['id']);
+            $this->lastUser = $jsonArray[$i]['id'];
         }
         return $users;
     }
@@ -128,6 +130,19 @@ class RestDBClass
             $count .= $str[$i];
         }
         return $count;
+    }
+
+    public function getLastUser() : int{
+        $users = array();
+        $ch = curl_init('https://gorest.co.in/public/v2/users');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+        $allData = curl_exec($ch);
+        curl_close($ch);
+        $jsonArray = json_decode($allData, true);
+        
+        return $jsonArray[0]['id'];
     }
 
 }

@@ -21,7 +21,7 @@
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
               processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">tests</directory>
+            <directory suffix=".php">database/RestDBClass.php</directory>
         </include>
     </coverage>
 </phpunit>
