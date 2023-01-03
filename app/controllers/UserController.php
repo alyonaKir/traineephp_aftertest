@@ -2,7 +2,6 @@
 namespace App\controllers;
 include 'vendor/autoload.php';
 
-use JetBrains\PhpStorm\NoReturn;
 use Models\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -23,41 +22,15 @@ class UserController
         $this->loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($this->loader);
         if (isset($_POST['email']) && $_POST['email'] != null) {
-            $email = $this->test_input($_POST["email"]);
-            $name = $this->test_input($_POST["name"]);
-            $gender = $this->test_input($_POST["gender"]);
-            $status = $this->test_input($_POST["status"]);
+            $email = $this->testInput($_POST["email"]);
+            $name = $this->testInput($_POST["name"]);
+            $gender = $this->testInput($_POST["gender"]);
+            $status = $this->testInput($_POST["status"]);
             $this->user = new User($email, $name, $gender, $status == "active" ? 1 : 0, $dbType);
         } else {
             $this->user = new User('', '', '', 1, $dbType);
         }
     }
-
-    /**
-     * @return FilesystemLoader
-     */
-    public function getLoader(): FilesystemLoader
-    {
-        return $this->loader;
-    }
-
-    /**
-     * @return Environment
-     */
-    public function getTwig(): Environment
-    {
-        return $this->twig;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-
 
     public function createUser(): void
     {
@@ -68,7 +41,7 @@ class UserController
         );
     }
 
-    private function test_input($data)
+    private function testInput($data)
     {
         $data = trim($data);
         $data = stripslashes($data);
@@ -89,12 +62,7 @@ class UserController
 
     public function showAll(): void
     {
-//        ini_set ('display_errors', 'on');
-        if (isset($_GET['page'])) {
-            $pageno = $_GET['page'];
-        } else {
-            $pageno = 1;
-        }
+        $pageno = $_GET['page'] ?? 1;
         $size_page = 10;
         $offset = ($pageno - 1) * $size_page;
         if ($_SESSION['dbType'] == "db") {
@@ -102,10 +70,7 @@ class UserController
         } else {
             $arrUsers = $this->user->showAllUsersFromDB($pageno, $size_page);
         }
-
         $delUrl = 'http://' . $_SERVER["HTTP_HOST"] . '/user/delete/';
-        //$id=2891;
-
         echo $this->twig->render('showAll.twig', [
             'deleteChecked' => 'http://' . $_SERVER["HTTP_HOST"] . '/users/deleteChecked',
             'mainPage' => 'http://' . $_SERVER["HTTP_HOST"],

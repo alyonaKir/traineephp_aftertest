@@ -108,7 +108,7 @@ class User implements IUser
     /**
      * @param String $email
      */
-    public function setEmal(string $email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -187,7 +187,6 @@ class User implements IUser
     public function showUserByID($id): User
     {
         if ($this->dbType == "db") {
-            //return new User("", "", "", "", "db");
             return $this->db->showByID($id);
         } else {
             return $this->rest->getUserById($id);
@@ -236,7 +235,6 @@ class User implements IUser
 
     public function isUserExist(): bool
     {
-        //return true;
         return $this->db->isUserInDB($this);
     }
 

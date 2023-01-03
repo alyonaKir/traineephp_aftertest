@@ -19,21 +19,23 @@ class DataBaseClass
     }
 
     private function __clone(){}
+
     public function __wakeup(){}
 
-    public static function getInstance() : DataBaseClass{
-            if(self::$instance!=null){
-                return self::$instance;
-            }
-            return new self();
+    public static function getInstance(): DataBaseClass
+    {
+        if (self::$instance != null) {
+            return self::$instance;
         }
+        return new self();
+    }
 
     /**
      * check is db not null
      *
      * @return void
      */
-    public static function checkDB() : void
+    public static function checkDB(): void
     {
         $users = array();
         $db = self::getInstance();
@@ -42,9 +44,6 @@ class DataBaseClass
         $sql = "SELECT * FROM $db_table";
         $log = "";
         if ($result = $conn->query($sql)) {
-            $rowsCount = $result->num_rows; // количество полученных строк
-
-            //echo '<pre>';
             foreach ($result as $row) {
                 if ($row['email'] == null) {
                     $db->deleteUser($row['id']);
@@ -96,7 +95,7 @@ class DataBaseClass
         $userEmail = $conn->real_escape_string($user->getEmail());
         $userName = $conn->real_escape_string($user->getName());
         $userGender = $conn->real_escape_string($user->getGender());
-        $userActive = $conn->real_escape_string($user->isActive()?1:0);
+        $userActive = $conn->real_escape_string($user->isActive() ? 1 : 0);
 
         $sql = "INSERT INTO $db_table(email, name, gender, active) VALUES ('$userEmail','$userName', '$userGender', '$userActive')";
 
@@ -127,7 +126,6 @@ class DataBaseClass
                 $users[] = new User($row["email"], $row["name"], $row["gender"], $row["active"], "db");
                 $users[count($users) - 1]->setId($row['id']);
             }
-            //}
             $result->free();
         } else {
             $log = "Ошибка: " . $conn->error;
@@ -143,7 +141,7 @@ class DataBaseClass
      * @param $id
      * @return void
      */
-    public function deleteUser($id) : void
+    public function deleteUser($id): void
     {
         $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
@@ -200,7 +198,7 @@ class DataBaseClass
         $userEmail = $conn->real_escape_string($user->getEmail());
         $userName = $conn->real_escape_string($user->getName());
         $userGender = $conn->real_escape_string($user->getGender());
-        $userActive = $conn->real_escape_string($user->isActive()?1:0);
+        $userActive = $conn->real_escape_string($user->isActive() ? 1 : 0);
 
         $sql = "UPDATE $db_table SET email = '$userEmail', name = '$userName', gender = '$userGender', active = '$userActive' WHERE id = $id";
 
@@ -227,7 +225,7 @@ class DataBaseClass
         $log = "";
         if ($result = $conn->query($sql)) {
 
-            if($result->num_rows==0){
+            if ($result->num_rows == 0) {
                 return false;
             }
             $result->free();
@@ -239,7 +237,8 @@ class DataBaseClass
         }
     }
 
-    public function getRowsNumber(): int{
+    public function getRowsNumber(): int
+    {
         $conn = $this->createConnection();
         $total_rows = 0;
         $db_table = $this->dbInfo['table'];
@@ -257,17 +256,17 @@ class DataBaseClass
         return $total_rows;
     }
 
-    public function isUserInDB($user) : bool{
+    public function isUserInDB($user): bool
+    {
         $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
         $userEmail = $conn->real_escape_string($user->getEmail());
         $sql = "SELECT * FROM $db_table WHERE email = '$userEmail'";
         $log = "";
         if ($result = $conn->query($sql)) {
-            if($result->num_rows == 0){
+            if ($result->num_rows == 0) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
             $result->free();
@@ -278,7 +277,8 @@ class DataBaseClass
         return false;
     }
 
-    public function clearDB(){
+    public function clearDB()
+    {
         $conn = $this->createConnection();
         $db_table = $this->dbInfo['table'];
         $sql = "DELETE FROM $db_table";

@@ -18,13 +18,9 @@ class RestDBClass
         $this->headers[] = 'Authorization: Bearer 9793ead2cc8ff849a69a00ffe49b8abc391f4de0398a79ce9bdccd8beef30cb6';
     }
 
-    private function __clone()
-    {
-    }
+    private function __clone(){}
 
-    public function __wakeup()
-    {
-    }
+    public function __wakeup(){}
 
     public static function getInstance(): RestDBClass
     {
